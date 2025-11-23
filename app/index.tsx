@@ -1,6 +1,7 @@
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
@@ -38,9 +39,12 @@ export default function Index() {
       </SafeAreaView>
 
       {/* ADD ICON */}
-      <View className="bg-sky-600 w-16 h-16 rounded-xl items-center justify-center shadow-md elevation-xl absolute bottom-0 right-0 mb-25 mr-6">
+      <Pressable
+        className="bg-sky-600 w-16 h-16 rounded-xl items-center justify-center shadow-md elevation-xl absolute bottom-0 right-0 mb-25 mr-6"
+        onPress={() => router.push("/NewUserScreen")}
+      >
         <MaterialIcons name="add" size={28} color="white" />
-      </View>
+      </Pressable>
     </View>
   );
 }
