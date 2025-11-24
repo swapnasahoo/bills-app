@@ -29,6 +29,7 @@ interface UserDataContextType {
   updateUser: (id: number, name: string, roomNo: number) => void;
   addBill: (id: number, entry: BillEntry) => void;
   deleteBill: (userid: number, billId: number) => void;
+  updateBill: (userId: number, billId: number, entry: BillEntry) => void;
 }
 
 export const UserDataContext = createContext<UserDataContextType>({
@@ -39,6 +40,7 @@ export const UserDataContext = createContext<UserDataContextType>({
   updateUser: () => {},
   addBill: () => {},
   deleteBill: () => {},
+  updateBill: () => {},
 });
 
 function UserDataContextProvider({ children }: { children: React.ReactNode }) {
@@ -77,6 +79,19 @@ function UserDataContextProvider({ children }: { children: React.ReactNode }) {
     }));
   }
 
+  function updateBill(
+    userId: number,
+    billId: number,
+    entry: Partial<BillEntry>
+  ) {
+    setUserBills((prev) => ({
+      ...prev,
+      [userId]: (prev[userId] ?? []).map((bill) =>
+        bill.id === billId ? { ...bill, ...entry } : bill
+      ),
+    }));
+  }
+
   return (
     <UserDataContext.Provider
       value={{
@@ -87,6 +102,7 @@ function UserDataContextProvider({ children }: { children: React.ReactNode }) {
         updateUser,
         addBill,
         deleteBill,
+        updateBill,
       }}
     >
       {children}
