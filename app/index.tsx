@@ -8,7 +8,7 @@ import { FlatList, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
-  const { users } = useContext(UserDataContext);
+  const { users, deleteUser } = useContext(UserDataContext);
 
   return (
     <View className="bg-gray-800 flex-1 p-6">
@@ -43,7 +43,12 @@ export default function Index() {
               <Text className="text-white text-2xl font-semibold mr-auto">
                 {item.name}
               </Text>
-              <Feather name="trash-2" size={20} color="#ff0505" />
+              <Feather
+                name="trash-2"
+                size={20}
+                color="#ff0505"
+                onPress={() => deleteUser(item.id)}
+              />
             </View>
           )}
         ></FlatList>
