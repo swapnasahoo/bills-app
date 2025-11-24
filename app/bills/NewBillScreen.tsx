@@ -64,15 +64,19 @@ const NewBillScreen = () => {
               { label: "Rent", placeholder: "0" },
               { label: "Fix", placeholder: "0" },
               {
-                label: "Previous Reading",
+                label: "Previous Unit",
                 placeholder: "0",
               },
               {
-                label: "Current Reading",
+                label: "Current Unit",
                 placeholder: "0",
               },
               {
-                label: "Reading Cost (per unit)",
+                label: "Cost per Unit",
+                placeholder: "0",
+              },
+              {
+                label: "Previous Due",
                 placeholder: "0",
               },
             ].map((field, idx) => (
