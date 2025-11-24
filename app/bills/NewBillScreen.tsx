@@ -163,6 +163,16 @@ const NewBillScreen = () => {
               <BouncyCheckbox
                 isChecked={isPrevDue}
                 onPress={() => setIsPrevDue(!isPrevDue)}
+                style={{
+                  marginLeft: "auto",
+                }}
+                iconStyle={{
+                  borderRadius: 4,
+                  borderWidth: 2,
+                }}
+                innerIconStyle={{
+                  borderRadius: 4,
+                }}
               />
             </View>
 
