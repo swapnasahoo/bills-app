@@ -92,6 +92,28 @@ const NewBillScreen = () => {
               </View>
             ))}
 
+            <Text className="text-lg text-white">Payment Method</Text>
+            <RNPickerSelect
+              onValueChange={(value) => console.log(value)}
+              items={[
+                { label: "Cash", value: "Cash" },
+                { label: "Online", value: "Online" },
+              ]}
+              style={{
+                inputAndroid: {
+                  color: "white",
+                  backgroundColor: "#374151",
+                },
+                inputIOS: {
+                  color: "white",
+                  backgroundColor: "#374151",
+                },
+                placeholder: {
+                  color: "#9ca3af",
+                },
+              }}
+            />
+
             {/* SUMMARY CARD */}
             <View className="bg-gray-700 mt-6 p-4 rounded-lg border border-gray-600">
               <Text className="text-white text-xl font-semibold mb-2">
