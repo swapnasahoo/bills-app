@@ -55,15 +55,7 @@ export default function Index() {
           data={users}
           keyExtractor={(user) => user.id.toString()}
           renderItem={({ item }) => (
-            <Pressable
-              className="flex-row items-center gap-4 mt-2 mb-2 bg-gray-600 h-20 px-6 rounded-md shadow-md elevation-lg"
-              onPress={() => {
-                router.push({
-                  pathname: "/user/UserEditScreen",
-                  params: { id: item.id },
-                });
-              }}
-            >
+            <Pressable className="flex-row items-center gap-4 mt-2 mb-2 bg-gray-600 h-20 px-6 rounded-md shadow-md elevation-lg">
               <View className="bg-pink-400 p-4 w-15 h-15 rounded-md justify-center items-center">
                 <Text className="text-white text-lg font-semibold">
                   {item.roomNo}
@@ -72,7 +64,17 @@ export default function Index() {
               <Text className="text-white text-2xl font-semibold mr-auto">
                 {item.name}
               </Text>
-              <Feather name="edit" size={20} color="white" />
+              <Feather
+                name="edit"
+                size={20}
+                color="white"
+                onPress={() => {
+                  router.push({
+                    pathname: "/user/UserEditScreen",
+                    params: { id: item.id },
+                  });
+                }}
+              />
               <Feather
                 name="trash-2"
                 size={20}
