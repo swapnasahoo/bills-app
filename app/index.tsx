@@ -34,7 +34,15 @@ export default function Index() {
           data={users}
           keyExtractor={(user) => user.id.toString()}
           renderItem={({ item }) => (
-            <View className="flex-row items-center gap-4 mt-2 mb-2 bg-gray-600 h-20 px-6 rounded-md shadow-md elevation-lg">
+            <Pressable
+              className="flex-row items-center gap-4 mt-2 mb-2 bg-gray-600 h-20 px-6 rounded-md shadow-md elevation-lg"
+              onPress={() => {
+                router.push({
+                  pathname: "/user/UserEditScreen",
+                  params: { id: item.id },
+                });
+              }}
+            >
               <View className="bg-pink-400 p-4 w-15 h-15 rounded-md justify-center items-center">
                 <Text className="text-white text-lg font-semibold">
                   {item.roomNo}
@@ -43,13 +51,14 @@ export default function Index() {
               <Text className="text-white text-2xl font-semibold mr-auto">
                 {item.name}
               </Text>
+              <Feather name="edit" size={20} color="white" />
               <Feather
                 name="trash-2"
                 size={20}
                 color="#ff0505"
                 onPress={() => deleteUser(item.id)}
               />
-            </View>
+            </Pressable>
           )}
         ></FlatList>
       </SafeAreaView>
@@ -57,7 +66,7 @@ export default function Index() {
       {/* ADD ICON */}
       <Pressable
         className="bg-sky-600 w-16 h-16 rounded-xl items-center justify-center shadow-md elevation-xl absolute bottom-0 right-0 mb-25 mr-6"
-        onPress={() => router.push("/NewUserScreen")}
+        onPress={() => router.push("/user/NewUserScreen")}
       >
         <MaterialIcons name="add" size={28} color="white" />
       </Pressable>
