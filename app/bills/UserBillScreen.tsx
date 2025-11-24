@@ -41,7 +41,9 @@ const NewUserScreen = () => {
               </Text>
 
               {/* DETAILS */}
-              <Text className="text-gray-300">Date: {item.date}</Text>
+              <Text className="text-gray-300">
+                Date: {new Date(item.id).toLocaleDateString("en-GB")}
+              </Text>
               <Text className="text-gray-300">Rent: ₹{item.rent}</Text>
               <Text className="text-gray-300">Fix: ₹{item.fix}</Text>
               <Text className="text-gray-300">
