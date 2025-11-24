@@ -2,12 +2,12 @@ import { UserDataContext } from "@/context/UserDataContext";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext } from "react";
-import { Pressable, Text, View } from "react-native";
+import { FlatList, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const NewUserScreen = () => {
   const { id } = useLocalSearchParams();
-  const { users } = useContext(UserDataContext);
+  const { users, userBills } = useContext(UserDataContext);
 
   const foundUser = users.find((user) => user.id === Number(id));
 
@@ -30,50 +30,40 @@ const NewUserScreen = () => {
         </View>
 
         {/* BILL LIST */}
-        <View className="bg-gray-700 px-4 py-3 rounded-lg my-3 shadow-md elevation-xl">
-          {/* MONTH */}
-          <Text className="text-xl text-white font-semibold mb-1">
-            November
-          </Text>
+        <FlatList
+          data={userBills[Number(id)]}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <View className="bg-gray-700 px-4 py-3 rounded-lg my-3 shadow-md elevation-xl">
+              {/* MONTH */}
+              <Text className="text-xl text-white font-semibold mb-1">
+                November
+              </Text>
 
-          {/* DETAILS */}
-          <Text className="text-gray-300">Date: 12/11/2025</Text>
-          <Text className="text-gray-300">Rent: ₹3000</Text>
-          <Text className="text-gray-300">Fix: ₹200</Text>
-          <Text className="text-gray-300">Previous Reading: 1200</Text>
-          <Text className="text-gray-300">Current Reading: 1500</Text>
-          <Text className="text-gray-300">Reading: 300</Text>
-          <Text className="text-gray-300">Unit Cost: ₹8</Text>
-          <Text className="text-gray-300">Reading Cost: ₹2400</Text>
+              {/* DETAILS */}
+              <Text className="text-gray-300">Date: {item.date}</Text>
+              <Text className="text-gray-300">Rent: ₹{item.rent}</Text>
+              <Text className="text-gray-300">Fix: ₹{item.fix}</Text>
+              <Text className="text-gray-300">
+                Previous Unit: {item.prevUnit}
+              </Text>
+              <Text className="text-gray-300">Current Unit: 1500</Text>
+              <Text className="text-gray-300">Reading: {item.reading}</Text>
+              <Text className="text-gray-300">Unit Cost: ₹{item.unitCost}</Text>
+              <Text className="text-gray-300">
+                Reading Cost: ₹{item.readingCost}
+              </Text>
 
-          {/* DIVIDER */}
-          <View className="h-px bg-gray-600 my-3" />
+              {/* DIVIDER */}
+              <View className="h-px bg-gray-600 my-3" />
 
-          {/* TOTAL */}
-          <Text className="text-amber-300 text-xl font-bold">Total: ₹5600</Text>
-        </View>
-        <View className="bg-gray-700 px-4 py-3 rounded-lg mt-3 shadow-md elevation-xl">
-          {/* MONTH */}
-          <Text className="text-xl text-white font-semibold mb-1">
-            November
-          </Text>
-
-          {/* DETAILS */}
-          <Text className="text-gray-300">Date: 12/11/2025</Text>
-          <Text className="text-gray-300">Rent: ₹3000</Text>
-          <Text className="text-gray-300">Fix: ₹200</Text>
-          <Text className="text-gray-300">Previous Reading: 1200</Text>
-          <Text className="text-gray-300">Current Reading: 1500</Text>
-          <Text className="text-gray-300">Reading: 300</Text>
-          <Text className="text-gray-300">Unit Cost: ₹8</Text>
-          <Text className="text-gray-300">Reading Cost: ₹2400</Text>
-
-          {/* DIVIDER */}
-          <View className="h-px bg-gray-600 my-3" />
-
-          {/* TOTAL */}
-          <Text className="text-amber-300 text-xl font-bold">Total: ₹5600</Text>
-        </View>
+              {/* TOTAL */}
+              <Text className="text-amber-300 text-xl font-bold">
+                Total: ₹{item.total}
+              </Text>
+            </View>
+          )}
+        ></FlatList>
       </SafeAreaView>
 
       {/* ADD ICON */}
