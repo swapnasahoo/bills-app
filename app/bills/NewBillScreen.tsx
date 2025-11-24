@@ -1,10 +1,14 @@
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
+import { useState } from "react";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import RNPickerSelect from "react-native-picker-select";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const NewBillScreen = () => {
+  const [isPrevDue, setIsPrevDue] = useState(false);
+
   return (
     <View className="bg-gray-800 flex-1 p-6">
       <SafeAreaView className="flex-1">
@@ -75,10 +79,6 @@ const NewBillScreen = () => {
                 label: "Cost per Unit",
                 placeholder: "0",
               },
-              {
-                label: "Previous Due",
-                placeholder: "0",
-              },
             ].map((field, idx) => (
               <View key={idx} className="w-full gap-1">
                 <Text className="text-lg text-white">{field.label}</Text>
@@ -91,6 +91,25 @@ const NewBillScreen = () => {
                 />
               </View>
             ))}
+
+            <View className="flex-row gap-2 my-1">
+              <Text className="text-lg text-white">Previous Due</Text>
+              <BouncyCheckbox
+                isChecked={isPrevDue}
+                onPress={() => {
+                  setIsPrevDue(!isPrevDue);
+                }}
+              />
+            </View>
+            <TextInput
+              placeholder="0"
+              placeholderTextColor="#9ca3af"
+              className="text-white text-xl border-2 border-blue-600 
+            p-3 rounded-md w-full bg-gray-700"
+              style={{
+                display: isPrevDue ? "flex" : "none",
+              }}
+            />
 
             <Text className="text-lg text-white">Payment Method</Text>
             <RNPickerSelect
