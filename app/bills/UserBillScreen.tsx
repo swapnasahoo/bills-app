@@ -49,7 +49,9 @@ const NewUserScreen = () => {
               <Text className="text-gray-300">
                 Previous Unit: {item.prevUnit}
               </Text>
-              <Text className="text-gray-300">Current Unit: 1500</Text>
+              <Text className="text-gray-300">
+                Current Unit: {item.currUnit}
+              </Text>
               <Text className="text-gray-300">Reading: {item.reading}</Text>
               <Text className="text-gray-300">Unit Cost: ₹{item.unitCost}</Text>
               <Text className="text-gray-300">

@@ -44,10 +44,7 @@ const NewBillScreen = () => {
     const r = Number(currUnit) - Number(prevUnit);
     const rc = r * Number(costUnit);
     const t =
-      Number(rent) +
-      Number(fix) +
-      Number(rc) +
-      (isPrevDue ? Number(prevDue || 0) : 0);
+      Number(rent) + Number(fix) + rc + (isPrevDue ? Number(prevDue || 0) : 0);
 
     const safeReading = isNaN(r) ? 0 : r;
     const safeReadingCost = isNaN(rc) ? 0 : rc;
@@ -56,7 +53,7 @@ const NewBillScreen = () => {
     setReading(safeReading);
     setReadingCost(safeReadingCost);
     setTotal(safeTotal);
-  }, [rent, fix, prevUnit, currUnit, costUnit, prevDue]);
+  }, [rent, fix, prevUnit, currUnit, costUnit, isPrevDue, prevDue]);
 
   return (
     <View className="bg-gray-800 flex-1 p-6">
