@@ -1,11 +1,15 @@
+import { UserDataContext } from "@/context/UserDataContext";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { useContext } from "react";
+import { FlatList, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
+  const { users } = useContext(UserDataContext);
+
   return (
     <View className="bg-gray-800 flex-1 p-6">
       <StatusBar style="light" />
@@ -23,26 +27,26 @@ export default function Index() {
 
         {/* LIST */}
         <Text className="text-white text-xl font-semibold mt-8">
-          Total: 540
+          Total: {users.length}
         </Text>
-        <View className="flex-row items-center gap-4 mt-2 mb-2 bg-gray-600 h-20 px-6 rounded-md shadow-md elevation-lg">
-          <View className="bg-pink-400 p-4 w-15 h-15 rounded-md justify-center items-center">
-            <Text className="text-white text-lg font-semibold">25</Text>
-          </View>
-          <Text className="text-white text-2xl font-semibold mr-auto">
-            Arnav
-          </Text>
-          <Feather name="trash-2" size={20} color="#ff0505" />
-        </View>
-        <View className="flex-row items-center gap-4 mt-2 mb-2 bg-gray-600 h-20 px-6 rounded-md shadow-md elevation-lg">
-          <View className="bg-pink-400 p-4 w-15 h-15 rounded-md justify-center items-center">
-            <Text className="text-white text-lg font-semibold">25</Text>
-          </View>
-          <Text className="text-white text-2xl font-semibold mr-auto">
-            Arnav
-          </Text>
-          <Feather name="trash-2" size={20} color="#ff0505" />
-        </View>
+
+        <FlatList
+          data={users}
+          keyExtractor={(user) => user.id.toString()}
+          renderItem={({ item }) => (
+            <View className="flex-row items-center gap-4 mt-2 mb-2 bg-gray-600 h-20 px-6 rounded-md shadow-md elevation-lg">
+              <View className="bg-pink-400 p-4 w-15 h-15 rounded-md justify-center items-center">
+                <Text className="text-white text-lg font-semibold">
+                  {item.roomNo}
+                </Text>
+              </View>
+              <Text className="text-white text-2xl font-semibold mr-auto">
+                {item.name}
+              </Text>
+              <Feather name="trash-2" size={20} color="#ff0505" />
+            </View>
+          )}
+        ></FlatList>
       </SafeAreaView>
 
       {/* ADD ICON */}
