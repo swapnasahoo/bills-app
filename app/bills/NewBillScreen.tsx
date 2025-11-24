@@ -21,7 +21,6 @@ const NewBillScreen = () => {
   const [isPrevDue, setIsPrevDue] = useState(false);
   const [selected, setSelected] = useState<DateType>(new Date());
   const [openDatePicker, setOpenDatePicker] = useState(false);
-
   const defaultStyles = useDefaultStyles();
 
   return (
@@ -79,7 +78,7 @@ const NewBillScreen = () => {
               >
                 <Text className="text-white text-xl">
                   {selected
-                    ? new Date(selected).toLocaleDateString()
+                    ? new Date(Number(selected)).toLocaleDateString()
                     : "Select Date"}
                 </Text>
               </Pressable>
@@ -111,33 +110,13 @@ const NewBillScreen = () => {
                       }}
                       styles={{
                         ...defaultStyles,
-                        container: { backgroundColor: "#1f2937" },
                         header: { backgroundColor: "#1f2937" },
-                        headerText: { color: "white" },
-
-                        weekDaysContainer: { backgroundColor: "#1f2937" },
-                        weekDayLabel: { color: "#9ca3af" },
-
-                        dayContainer: {
-                          gap: 4,
-                        },
 
                         day: {
                           backgroundColor: "#1f2937",
                           width: 38,
                           borderRadius: 6,
                         },
-                        dayLabel: { color: "#e5e7eb" },
-
-                        todayContainer: { backgroundColor: "#2563eb" },
-                        todayLabel: { color: "white", fontWeight: "700" },
-
-                        selectedDayLabel: {
-                          color: "black",
-                          fontWeight: "700",
-                        },
-
-                        arrow: { tintColor: "white" },
                       }}
                     />
 
