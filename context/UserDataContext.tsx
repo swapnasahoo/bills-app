@@ -28,7 +28,7 @@ interface UserDataContextType {
   deleteUser: (id: number) => void;
   updateUser: (id: number, name: string, roomNo: number) => void;
   addBill: (id: number, entry: BillEntry) => void;
-  deleteBill: (id: number) => void;
+  deleteBill: (userid: number, billId: number) => void;
 }
 
 export const UserDataContext = createContext<UserDataContextType>({
@@ -70,12 +70,11 @@ function UserDataContextProvider({ children }: { children: React.ReactNode }) {
     }));
   }
 
-  function deleteBill(id: number) {
-    setUserBills((prev) => {
-      const updated = { ...prev };
-      delete updated[id];
-      return updated;
-    });
+  function deleteBill(userId: number, billId: number) {
+    setUserBills((prev) => ({
+      ...prev,
+      [userId]: prev[userId].filter((bill) => bill.id !== billId),
+    }));
   }
 
   return (
