@@ -22,12 +22,14 @@ interface UserDataContextType {
   users: User[];
   userBills: { [key: number]: BillEntry[] };
   addUser: (id: number, name: string, roomNo: number) => void;
+  deleteUser: (id: number) => void;
 }
 
 export const UserDataContext = createContext<UserDataContextType>({
   users: [],
   userBills: {},
   addUser: () => {},
+  deleteUser: () => {},
 });
 
 function UserDataContextProvider({ children }: { children: React.ReactNode }) {
@@ -38,8 +40,12 @@ function UserDataContextProvider({ children }: { children: React.ReactNode }) {
     setUsers((prev) => [...prev, { id: id, name: name, roomNo: roomNo }]);
   }
 
+  function deleteUser(id: number) {
+    setUsers(users.filter((user) => user.id !== id));
+  }
+
   return (
-    <UserDataContext.Provider value={{ users, userBills, addUser }}>
+    <UserDataContext.Provider value={{ users, userBills, addUser, deleteUser }}>
       {children}
     </UserDataContext.Provider>
   );
