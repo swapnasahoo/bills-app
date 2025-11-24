@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createContext, useEffect, useState } from "react";
 
 interface User {
   id: number;
@@ -49,6 +50,7 @@ function UserDataContextProvider({ children }: { children: React.ReactNode }) {
   const [userBills, setUserBills] = useState<{ [key: number]: BillEntry[] }>(
     {}
   );
+  const [loaded, setLoaded] = useState(false);
 
   function addUser(id: number, name: string, roomNo: number) {
     setUsers((prev) => [...prev, { id: id, name: name, roomNo: roomNo }]);
@@ -92,6 +94,29 @@ function UserDataContextProvider({ children }: { children: React.ReactNode }) {
       ),
     }));
   }
+
+
+  // LOAD DATA
+  useEffect(() => {
+    async function loadData() {
+      const savedUsers = await AsyncStorage.getItem("users");
+      const savedUserBills = await AsyncStorage.getItem("userBills");
+
+      if (savedUsers) setUsers(JSON.parse(savedUsers));
+      if (savedUserBills) setUserBills(JSON.parse(savedUserBills));
+
+      setLoaded(true);
+    }
+    loadData();
+  }, []);
+
+  // SAVE DATA
+  useEffect(() => {
+    if (!loaded) return;
+
+    AsyncStorage.setItem("users", JSON.stringify(users));
+    AsyncStorage.setItem("userBills", JSON.stringify(userBills));
+  }, [users, userBills, loaded]);
 
   return (
     <UserDataContext.Provider
