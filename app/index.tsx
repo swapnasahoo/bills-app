@@ -4,11 +4,32 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useContext } from "react";
-import { FlatList, Pressable, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  Pressable,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const { users, deleteUser } = useContext(UserDataContext);
+
+  function confirmDeleteUser(id: number) {
+    Alert.alert("Delete User", "Are you sure you want to delete this user?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: () => deleteUser(id),
+      },
+    ]);
+  }
 
   return (
     <View className="bg-gray-800 flex-1 p-6">
@@ -56,7 +77,7 @@ export default function Index() {
                 name="trash-2"
                 size={20}
                 color="#ff0505"
-                onPress={() => deleteUser(item.id)}
+                onPress={() => confirmDeleteUser(item.id)}
               />
             </Pressable>
           )}
