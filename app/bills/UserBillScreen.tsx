@@ -2,7 +2,7 @@ import { UserDataContext } from "@/context/UserDataContext";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext } from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const NewUserScreen = () => {
@@ -10,6 +10,7 @@ const NewUserScreen = () => {
   const { users } = useContext(UserDataContext);
 
   const foundUser = users.find((user) => user.id === Number(id));
+
   if (!foundUser) return null;
 
   return (
@@ -74,6 +75,14 @@ const NewUserScreen = () => {
           <Text className="text-amber-300 text-xl font-bold">Total: ₹5600</Text>
         </View>
       </SafeAreaView>
+
+      {/* ADD ICON */}
+      <Pressable
+        className="bg-sky-600 w-16 h-16 rounded-xl items-center justify-center shadow-md elevation-xl absolute bottom-0 right-0 mb-25 mr-6"
+        onPress={() => router.push("/bills/NewBillScreen")}
+      >
+        <MaterialIcons name="add" size={28} color="white" />
+      </Pressable>
     </View>
   );
 };
