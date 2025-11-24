@@ -185,7 +185,11 @@ const EditBillScreen = () => {
                   placeholderTextColor="#9ca3af"
                   className="text-white text-xl border-2 border-blue-600 p-3 rounded-md w-full bg-gray-700"
                   value={field.value.toString()}
-                  onChangeText={field.change}
+                  onChangeText={(text) => {
+                    const cleaned = text.replace(/[-.,]/g, "");
+                    field.change(cleaned);
+                  }}
+                  keyboardType="numeric"
                 />
               </View>
             ))}

@@ -148,11 +148,26 @@ const NewBillScreen = () => {
 
             {/* OTHER FIELDS */}
             {[
-              { label: "Rent", placeholder: "0", change: setRent },
-              { label: "Fix", placeholder: "0", change: setFix },
-              { label: "Previous Unit", placeholder: "0", change: setPrevUnit },
-              { label: "Current Unit", placeholder: "0", change: setCurrUnit },
-              { label: "Cost per Unit", placeholder: "0", change: setCostUnit },
+              { label: "Rent", placeholder: "0", change: setRent, value: rent },
+              { label: "Fix", placeholder: "0", change: setFix, value: fix },
+              {
+                label: "Previous Unit",
+                placeholder: "0",
+                change: setPrevUnit,
+                value: prevUnit,
+              },
+              {
+                label: "Current Unit",
+                placeholder: "0",
+                change: setCurrUnit,
+                value: currUnit,
+              },
+              {
+                label: "Cost per Unit",
+                placeholder: "0",
+                change: setCostUnit,
+                value: costUnit,
+              },
             ].map((field, i) => (
               <View key={i} className="w-full gap-1">
                 <Text className="text-lg text-white">{field.label}</Text>
@@ -160,7 +175,12 @@ const NewBillScreen = () => {
                   placeholder={field.placeholder}
                   placeholderTextColor="#9ca3af"
                   className="text-white text-xl border-2 border-blue-600 p-3 rounded-md w-full bg-gray-700"
-                  onChangeText={field.change}
+                  value={field.value}
+                  onChangeText={(text) => {
+                    const cleaned = text.replace(/[-.,]/g, "");
+                    field.change(cleaned);
+                  }}
+                  keyboardType="numeric"
                 />
               </View>
             ))}
