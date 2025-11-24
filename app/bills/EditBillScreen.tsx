@@ -18,27 +18,35 @@ import DateTimePicker, {
   useDefaultStyles,
 } from "react-native-ui-datepicker";
 
-const NewBillScreen = () => {
+const EditBillScreen = () => {
   const [isPrevDue, setIsPrevDue] = useState(false);
   const [selected, setSelected] = useState<DateType>(new Date());
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const defaultStyles = useDefaultStyles();
 
-  const { addBill } = useContext(UserDataContext);
-  const { id } = useLocalSearchParams();
+  const { userBills, updateBill } = useContext(UserDataContext);
+  const { userId, billId } = useLocalSearchParams();
+
+  const userIdNum = Number(userId);
+  const billIdNum = Number(billId);
+
+  const billsForUser = userBills[userIdNum] ?? [];
+  const foundBill = billsForUser.find((bill) => bill.id === billIdNum);
 
   // INPUTS DATA
-  const [rent, setRent] = useState("");
-  const [fix, setFix] = useState("");
-  const [prevUnit, setPrevUnit] = useState("");
-  const [currUnit, setCurrUnit] = useState("");
-  const [costUnit, setCostUnit] = useState("");
-  const [prevDue, setPrevDue] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
+  const [rent, setRent] = useState(foundBill?.rent ?? "");
+  const [fix, setFix] = useState(foundBill?.fix ?? "");
+  const [prevUnit, setPrevUnit] = useState(foundBill?.prevUnit ?? "");
+  const [currUnit, setCurrUnit] = useState(foundBill?.currUnit ?? "");
+  const [costUnit, setCostUnit] = useState(foundBill?.unitCost ?? "");
+  const [prevDue, setPrevDue] = useState(foundBill?.prevDue ?? "");
+  const [paymentMethod, setPaymentMethod] = useState(
+    foundBill?.paymentMethod ?? ""
+  );
 
-  const [reading, setReading] = useState(0);
-  const [readingCost, setReadingCost] = useState(0);
-  const [total, setTotal] = useState(0);
+  const [reading, setReading] = useState(foundBill?.reading ?? 0);
+  const [readingCost, setReadingCost] = useState(foundBill?.readingCost ?? 0);
+  const [total, setTotal] = useState(foundBill?.total ?? 0);
 
   useEffect(() => {
     const r = Number(currUnit) - Number(prevUnit);
@@ -55,6 +63,7 @@ const NewBillScreen = () => {
     setTotal(safeTotal);
   }, [rent, fix, prevUnit, currUnit, costUnit, isPrevDue, prevDue]);
 
+  if (!foundBill) return null;
   return (
     <View className="bg-gray-800 flex-1 p-6">
       <SafeAreaView className="flex-1">
@@ -66,7 +75,7 @@ const NewBillScreen = () => {
             color="white"
             onPress={() => router.push("/")}
           />
-          <Text className="text-xl text-white font-bold">Add Bill</Text>
+          <Text className="text-xl text-white font-bold">Edit Bill</Text>
         </View>
 
         {/* FORM */}
@@ -148,11 +157,26 @@ const NewBillScreen = () => {
 
             {/* OTHER FIELDS */}
             {[
-              { label: "Rent", placeholder: "0", change: setRent },
-              { label: "Fix", placeholder: "0", change: setFix },
-              { label: "Previous Unit", placeholder: "0", change: setPrevUnit },
-              { label: "Current Unit", placeholder: "0", change: setCurrUnit },
-              { label: "Cost per Unit", placeholder: "0", change: setCostUnit },
+              { label: "Rent", placeholder: "0", change: setRent, value: rent },
+              { label: "Fix", placeholder: "0", change: setFix, value: fix },
+              {
+                label: "Previous Unit",
+                placeholder: "0",
+                change: setPrevUnit,
+                value: prevUnit,
+              },
+              {
+                label: "Current Unit",
+                placeholder: "0",
+                change: setCurrUnit,
+                value: currUnit,
+              },
+              {
+                label: "Cost per Unit",
+                placeholder: "0",
+                change: setCostUnit,
+                value: costUnit,
+              },
             ].map((field, i) => (
               <View key={i} className="w-full gap-1">
                 <Text className="text-lg text-white">{field.label}</Text>
@@ -160,6 +184,7 @@ const NewBillScreen = () => {
                   placeholder={field.placeholder}
                   placeholderTextColor="#9ca3af"
                   className="text-white text-xl border-2 border-blue-600 p-3 rounded-md w-full bg-gray-700"
+                  value={field.value.toString()}
                   onChangeText={field.change}
                 />
               </View>
@@ -240,7 +265,7 @@ const NewBillScreen = () => {
                   month: "long",
                 });
 
-                addBill(Number(id), {
+                updateBill(userIdNum, billIdNum, {
                   id: Date.now(),
                   month: month,
                   date: new Date(selected).getTime(),
@@ -260,7 +285,7 @@ const NewBillScreen = () => {
               }}
             >
               <Text className="text-black text-center text-lg font-semibold">
-                Add Bill
+                Update Bill
               </Text>
             </Pressable>
           </View>
@@ -270,4 +295,4 @@ const NewBillScreen = () => {
   );
 };
 
-export default NewBillScreen;
+export default EditBillScreen;

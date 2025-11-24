@@ -38,10 +38,22 @@ const NewUserScreen = () => {
           renderItem={({ item }) => (
             <View className="bg-gray-700 px-4 py-3 rounded-lg my-3 shadow-md elevation-xl">
               {/* MONTH + CONTROL ICONS */}
-              <View className="flex-row">
+              <View className="flex-row gap-4">
                 <Text className="text-xl text-white font-semibold mb-1 mr-auto">
                   {item.month}
                 </Text>
+
+                <Feather
+                  name="edit"
+                  size={20}
+                  color="white"
+                  onPress={() => {
+                    router.push({
+                      pathname: "/bills/EditBillScreen",
+                      params: { userId: id, billId: item.id },
+                    });
+                  }}
+                />
 
                 <Feather
                   name="trash-2"
