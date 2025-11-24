@@ -84,10 +84,24 @@ const NewUserScreen = () => {
               {/* DIVIDER */}
               <View className="h-px bg-gray-600 my-3" />
 
-              {/* TOTAL */}
-              <Text className="text-amber-300 text-xl font-bold">
-                Total: ₹{item.total}
-              </Text>
+              {/* TOTAL + BILL STATUS */}
+              <View className="flex-row">
+                <Text className="text-amber-300 text-xl font-bold mr-auto">
+                  Total: ₹{item.total}
+                </Text>
+
+                <View
+                  className={`${
+                    Number(item.paymentMethod) === 0
+                      ? "bg-red-400"
+                      : "bg-green-400"
+                  } px-8 py-1 rounded-md`}
+                >
+                  <Text className="text-lg">
+                    {Number(item.paymentMethod) === 0 ? "Unpaid" : "Paid"}
+                  </Text>
+                </View>
+              </View>
             </View>
           )}
         ></FlatList>

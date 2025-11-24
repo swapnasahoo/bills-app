@@ -197,8 +197,9 @@ const NewBillScreen = () => {
             <RNPickerSelect
               onValueChange={(value) => setPaymentMethod(value)}
               items={[
-                { label: "Cash", value: "Cash" },
-                { label: "Online", value: "Online" },
+                { label: "None", value: "0" },
+                { label: "Cash", value: "1" },
+                { label: "Online", value: "1" },
               ]}
               style={{
                 inputAndroid: { color: "white", backgroundColor: "#374151" },
