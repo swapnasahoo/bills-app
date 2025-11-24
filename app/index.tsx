@@ -55,7 +55,15 @@ export default function Index() {
           data={users}
           keyExtractor={(user) => user.id.toString()}
           renderItem={({ item }) => (
-            <Pressable className="flex-row items-center gap-4 mt-2 mb-2 bg-gray-600 h-20 px-6 rounded-md shadow-md elevation-lg">
+            <Pressable
+              className="flex-row items-center gap-4 mt-2 mb-2 bg-gray-600 h-20 px-6 rounded-md shadow-md elevation-lg"
+              onPress={() => {
+                router.push({
+                  pathname: "/bills/UserBillScreen",
+                  params: { id: item.id },
+                });
+              }}
+            >
               <View className="bg-pink-400 p-4 w-15 h-15 rounded-md justify-center items-center">
                 <Text className="text-white text-lg font-semibold">
                   {item.roomNo}
