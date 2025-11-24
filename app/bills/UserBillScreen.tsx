@@ -79,7 +79,12 @@ const NewUserScreen = () => {
       {/* ADD ICON */}
       <Pressable
         className="bg-sky-600 w-16 h-16 rounded-xl items-center justify-center shadow-md elevation-xl absolute bottom-0 right-0 mb-25 mr-6"
-        onPress={() => router.push("/bills/NewBillScreen")}
+        onPress={() =>
+          router.push({
+            pathname: "/bills/NewBillScreen",
+            params: { id: id },
+          })
+        }
       >
         <MaterialIcons name="add" size={28} color="white" />
       </Pressable>

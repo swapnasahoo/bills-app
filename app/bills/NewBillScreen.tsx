@@ -1,6 +1,7 @@
+import { UserDataContext } from "@/context/UserDataContext";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { router } from "expo-router";
-import { useState } from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import { useContext, useEffect, useState } from "react";
 import {
   Modal,
   Pressable,
@@ -22,6 +23,40 @@ const NewBillScreen = () => {
   const [selected, setSelected] = useState<DateType>(new Date());
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const defaultStyles = useDefaultStyles();
+
+  const { addBill } = useContext(UserDataContext);
+  const { id } = useLocalSearchParams();
+
+  // INPUTS DATA
+  const [rent, setRent] = useState("");
+  const [fix, setFix] = useState("");
+  const [prevUnit, setPrevUnit] = useState("");
+  const [currUnit, setCurrUnit] = useState("");
+  const [costUnit, setCostUnit] = useState("");
+  const [prevDue, setPrevDue] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+
+  const [reading, setReading] = useState(0);
+  const [readingCost, setReadingCost] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    const r = Number(currUnit) - Number(prevUnit);
+    const rc = r * Number(costUnit);
+    const t =
+      Number(rent) +
+      Number(fix) +
+      Number(rc) +
+      (isPrevDue ? Number(prevDue || 0) : 0);
+
+    const safeReading = isNaN(r) ? 0 : r;
+    const safeReadingCost = isNaN(rc) ? 0 : rc;
+    const safeTotal = isNaN(t) ? 0 : t;
+
+    setReading(safeReading);
+    setReadingCost(safeReadingCost);
+    setTotal(safeTotal);
+  }, [rent, fix, prevUnit, currUnit, costUnit, prevDue]);
 
   return (
     <View className="bg-gray-800 flex-1 p-6">
@@ -116,11 +151,11 @@ const NewBillScreen = () => {
 
             {/* OTHER FIELDS */}
             {[
-              { label: "Rent", placeholder: "0" },
-              { label: "Fix", placeholder: "0" },
-              { label: "Previous Unit", placeholder: "0" },
-              { label: "Current Unit", placeholder: "0" },
-              { label: "Cost per Unit", placeholder: "0" },
+              { label: "Rent", placeholder: "0", change: setRent },
+              { label: "Fix", placeholder: "0", change: setFix },
+              { label: "Previous Unit", placeholder: "0", change: setPrevUnit },
+              { label: "Current Unit", placeholder: "0", change: setCurrUnit },
+              { label: "Cost per Unit", placeholder: "0", change: setCostUnit },
             ].map((field, i) => (
               <View key={i} className="w-full gap-1">
                 <Text className="text-lg text-white">{field.label}</Text>
@@ -128,6 +163,7 @@ const NewBillScreen = () => {
                   placeholder={field.placeholder}
                   placeholderTextColor="#9ca3af"
                   className="text-white text-xl border-2 border-blue-600 p-3 rounded-md w-full bg-gray-700"
+                  onChangeText={field.change}
                 />
               </View>
             ))}
@@ -156,12 +192,13 @@ const NewBillScreen = () => {
               placeholderTextColor="#9ca3af"
               className="text-white text-xl border-2 border-blue-600 p-3 rounded-md w-full bg-gray-700"
               style={{ display: isPrevDue ? "flex" : "none" }}
+              onChangeText={setPrevDue}
             />
 
             {/* PAYMENT METHOD */}
             <Text className="text-lg text-white">Payment Method</Text>
             <RNPickerSelect
-              onValueChange={(value) => console.log(value)}
+              onValueChange={(value) => setPaymentMethod(value)}
               items={[
                 { label: "Cash", value: "Cash" },
                 { label: "Online", value: "Online" },
@@ -179,19 +216,46 @@ const NewBillScreen = () => {
                 Bill Summary
               </Text>
 
-              <Text className="text-gray-300">Reading: 300</Text>
-              <Text className="text-gray-300">Unit Cost: 8</Text>
-              <Text className="text-gray-300">Unit: 2400</Text>
+              <Text className="text-gray-300">Unit: {reading}</Text>
+              <Text className="text-gray-300">Unit Cost: {costUnit}</Text>
+              <Text className="text-gray-300">Unit Cost: {readingCost}</Text>
 
               <View className="h-px bg-gray-500 my-2" />
 
               <Text className="text-amber-300 text-2xl font-bold">
-                Total: ₹5600
+                Total: ₹{total}
               </Text>
             </View>
 
             {/* SUBMIT */}
-            <Pressable className="bg-amber-500 py-3 rounded-md mt-6">
+            <Pressable
+              className="bg-amber-500 py-3 rounded-md mt-6"
+              onPress={() => {
+                const reading = Number(currUnit) - Number(prevUnit);
+                const readingCost = reading * Number(costUnit);
+                const total =
+                  Number(rent) +
+                  Number(fix) +
+                  readingCost +
+                  Number(prevDue || 0);
+
+                addBill(Number(id), {
+                  id: Date.now(),
+                  date: new Date(selected).getTime(),
+                  rent: Number(rent),
+                  fix: Number(fix),
+                  prevUnit: Number(prevUnit),
+                  currUnit: Number(currUnit),
+                  reading: reading,
+                  unitCost: Number(costUnit),
+                  paymentMethod: paymentMethod,
+                  readingCost: readingCost,
+                  total: total,
+                });
+
+                router.back();
+              }}
+            >
               <Text className="text-black text-center text-lg font-semibold">
                 Add Bill
               </Text>

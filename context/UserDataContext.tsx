@@ -11,10 +11,11 @@ interface BillEntry {
   date: number;
   rent: number;
   fix: number;
-  prevReading: number;
-  currReaading: number;
+  prevUnit: number;
+  currUnit: number;
   reading: number;
   unitCost: number;
+  paymentMethod: string;
   readingCost: number;
   total: number;
 }
