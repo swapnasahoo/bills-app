@@ -73,7 +73,7 @@ function UserDataContextProvider({ children }: { children: React.ReactNode }) {
   function deleteBill(userId: number, billId: number) {
     setUserBills((prev) => ({
       ...prev,
-      [userId]: prev[userId].filter((bill) => bill.id !== billId),
+      [userId]: prev[userId ?? []].filter((bill) => bill.id !== billId),
     }));
   }
 

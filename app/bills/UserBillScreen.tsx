@@ -1,13 +1,15 @@
 import { UserDataContext } from "@/context/UserDataContext";
+import Feather from "@expo/vector-icons/Feather";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router, useLocalSearchParams } from "expo-router";
+
 import { useContext } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const NewUserScreen = () => {
   const { id } = useLocalSearchParams();
-  const { users, userBills } = useContext(UserDataContext);
+  const { users, userBills, deleteBill } = useContext(UserDataContext);
 
   const foundUser = users.find((user) => user.id === Number(id));
 
@@ -35,10 +37,19 @@ const NewUserScreen = () => {
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <View className="bg-gray-700 px-4 py-3 rounded-lg my-3 shadow-md elevation-xl">
-              {/* MONTH */}
-              <Text className="text-xl text-white font-semibold mb-1">
-                {item.month}
-              </Text>
+              {/* MONTH + CONTROL ICONS */}
+              <View className="flex-row">
+                <Text className="text-xl text-white font-semibold mb-1 mr-auto">
+                  {item.month}
+                </Text>
+
+                <Feather
+                  name="trash-2"
+                  size={20}
+                  color="#ff0505"
+                  onPress={() => deleteBill(Number(id), item.id)}
+                />
+              </View>
 
               {/* DETAILS */}
               <Text className="text-gray-300">
