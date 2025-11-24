@@ -43,31 +43,6 @@ const NewBillScreen = () => {
           showsVerticalScrollIndicator={false}
         >
           <View className="mt-4 w-full gap-4">
-            {/* MONTH PICKER */}
-            <Text className="text-white text-lg">Month</Text>
-            <RNPickerSelect
-              onValueChange={(value) => console.log(value)}
-              items={[
-                { label: "January", value: "January" },
-                { label: "February", value: "Feburary" },
-                { label: "March", value: "March" },
-                { label: "April", value: "April" },
-                { label: "May", value: "May" },
-                { label: "June", value: "June" },
-                { label: "July", value: "July" },
-                { label: "August", value: "August" },
-                { label: "September", value: "September" },
-                { label: "October", value: "October" },
-                { label: "November", value: "November" },
-                { label: "December", value: "December" },
-              ]}
-              style={{
-                inputAndroid: { color: "white", backgroundColor: "#374151" },
-                inputIOS: { color: "white", backgroundColor: "#374151" },
-                placeholder: { color: "#9ca3af" },
-              }}
-            />
-
             {/* DATE FIELD — TAP TO OPEN PICKER */}
             <View>
               <Text className="text-lg text-white mb-1">Date</Text>
