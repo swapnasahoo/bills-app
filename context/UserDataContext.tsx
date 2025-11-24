@@ -18,6 +18,7 @@ interface BillEntry {
   unitCost: number;
   paymentMethod: string;
   readingCost: number;
+  prevDue: number;
   total: number;
 }
 
