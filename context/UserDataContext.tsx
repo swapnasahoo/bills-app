@@ -8,6 +8,7 @@ interface User {
 
 interface BillEntry {
   id: number;
+  month: string;
   date: number;
   rent: number;
   fix: number;

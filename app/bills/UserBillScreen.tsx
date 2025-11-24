@@ -37,7 +37,7 @@ const NewUserScreen = () => {
             <View className="bg-gray-700 px-4 py-3 rounded-lg my-3 shadow-md elevation-xl">
               {/* MONTH */}
               <Text className="text-xl text-white font-semibold mb-1">
-                November
+                {item.month}
               </Text>
 
               {/* DETAILS */}
