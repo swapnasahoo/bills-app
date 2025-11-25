@@ -115,7 +115,13 @@ const NewUserScreen = () => {
               <Text className="text-gray-300 font-medium">
                 Reading Cost: ₹{item.readingCost}
               </Text>
-              <Text className="text-gray-300 font-medium">
+              <Text
+                style={{
+                  color: "#d1d5dc",
+                  fontWeight: 500,
+                  display: item.prevDue === 0 ? "none" : "flex",
+                }}
+              >
                 Previous Due: ₹{item.prevDue}
               </Text>
 
