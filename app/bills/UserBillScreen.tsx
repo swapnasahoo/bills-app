@@ -4,7 +4,7 @@ import Feather from "@expo/vector-icons/Feather";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext } from "react";
-import { FlatList, Pressable, Text, View } from "react-native";
+import { Alert, FlatList, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import * as Print from "expo-print";
@@ -17,6 +17,22 @@ const NewUserScreen = () => {
   const foundUser = users.find((user) => user.id === Number(id));
 
   if (!foundUser) return null;
+
+  function confirmDeleteBill(userId: number, billId: number) {
+    Alert.alert("Delete Bill", "Are you sure you want to delete this bill?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: () => {
+          deleteBill(userId, billId);
+        },
+      },
+    ]);
+  }
 
   async function shareBill(item: any) {
     const safe = (v: any, fallback = "N/A") =>
@@ -199,7 +215,7 @@ const NewUserScreen = () => {
                   name="trash-2"
                   size={20}
                   color="#ff0505"
-                  onPress={() => deleteBill(Number(id), item.id)}
+                  onPress={() => confirmDeleteBill(Number(id), item.id)}
                 />
               </View>
 
