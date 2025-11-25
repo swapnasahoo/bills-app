@@ -273,7 +273,6 @@ const NewBillScreen = () => {
               onPress={() => {
                 if (
                   !rent ||
-                  !fix ||
                   !prevUnit ||
                   !currUnit ||
                   !costUnit ||
@@ -281,7 +280,7 @@ const NewBillScreen = () => {
                 ) {
                   Alert.alert(
                     "Error",
-                    "Please fill all the fields.\nPrevious Due is optional.",
+                    "Please fill all the fields.\nFix and Previous Due are optional.",
                     [{ text: "OK", style: "cancel" }]
                   );
                   return;
