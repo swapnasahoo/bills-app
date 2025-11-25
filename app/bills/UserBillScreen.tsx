@@ -214,6 +214,10 @@ const NewUserScreen = () => {
         <FlatList
           data={userBills[Number(id)]}
           keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={{
+            paddingBottom: 95,
+          }}
+          showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
             <View className="bg-gray-900 px-5 py-4 rounded-xl my-3 shadow-md border border-gray-800">
               {/* MONTH + CONTROL ICONS */}

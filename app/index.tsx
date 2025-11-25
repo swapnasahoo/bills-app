@@ -67,6 +67,10 @@ export default function Index() {
         <FlatList
           data={filteredUsers}
           keyExtractor={(user) => user.id.toString()}
+          contentContainerStyle={{
+            paddingBottom: 95,
+          }}
+          showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <Pressable
               className="flex-row items-center gap-4 mt-2 mb-2 
