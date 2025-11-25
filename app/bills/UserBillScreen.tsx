@@ -215,76 +215,92 @@ const NewUserScreen = () => {
           data={userBills[Number(id)]}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <View className="bg-gray-700 px-4 py-3 rounded-lg my-3 shadow-md elevation-xl">
+            <View className="bg-gray-900 px-5 py-4 rounded-xl my-3 shadow-md border border-gray-800">
               {/* MONTH + CONTROL ICONS */}
-              <View className="flex-row gap-4">
-                <Text className="text-xl text-white font-semibold mb-1 mr-auto">
+              <View className="flex-row items-center mb-2">
+                <Text className="text-xl text-white font-semibold mr-auto tracking-wide">
                   {item.month}
                 </Text>
 
                 <Entypo
                   name="share"
                   size={20}
-                  color="white"
+                  color="#60a5fa" // soft blue
                   onPress={() => shareBill(item)}
                 />
 
                 <Feather
                   name="edit"
                   size={20}
-                  color="white"
+                  color="#34d399" // mint green
                   onPress={() => {
                     router.push({
                       pathname: "/bills/EditBillScreen",
                       params: { userId: id, billId: item.id },
                     });
                   }}
+                  style={{ marginLeft: 12 }}
                 />
 
                 <Feather
                   name="trash-2"
                   size={20}
-                  color="#ff0505"
+                  color="#f87171" // warm red
                   onPress={() => confirmDeleteBill(Number(id), item.id)}
+                  style={{ marginLeft: 12 }}
                 />
               </View>
 
               {/* DETAILS */}
-              <Text className="text-gray-300">
+              <Text className="text-gray-400">
                 Date: {new Date(item.date).toLocaleDateString("en-GB")}
               </Text>
-              <Text className="text-gray-300">Rent: ₹{item.rent}</Text>
-              <Text className="text-gray-300">Fix: ₹{item.fix}</Text>
-              <Text className="text-gray-300">
+
+              <Text className="text-gray-300 font-medium">
+                Rent: ₹{item.rent}
+              </Text>
+              <Text className="text-gray-300 font-medium">
+                Fix: ₹{item.fix}
+              </Text>
+              <Text className="text-gray-400">
                 Previous Unit: {item.prevUnit}
               </Text>
-              <Text className="text-gray-300">
+              <Text className="text-gray-400">
                 Current Unit: {item.currUnit}
               </Text>
-              <Text className="text-gray-300">Reading: {item.reading}</Text>
-              <Text className="text-gray-300">Unit Cost: ₹{item.unitCost}</Text>
-              <Text className="text-gray-300">
+              <Text className="text-gray-400">Reading: {item.reading}</Text>
+              <Text className="text-gray-400">Unit Cost: ₹{item.unitCost}</Text>
+              <Text className="text-gray-300 font-medium">
                 Reading Cost: ₹{item.readingCost}
+              </Text>
+              <Text className="text-gray-300 font-medium">
+                Previous Due: ₹{item.prevDue}
               </Text>
 
               {/* DIVIDER */}
-              <View className="h-px bg-gray-600 my-3" />
+              <View className="h-px bg-gray-700 my-3" />
 
               {/* TOTAL + BILL STATUS */}
-              <View className="flex-row">
-                <Text className="text-amber-300 text-xl font-bold mr-auto">
-                  Total: ₹{item.total}
+              <View className="flex-row items-center">
+                <Text className="text-amber-400 text-2xl font-bold mr-auto">
+                  ₹{item.total}
                 </Text>
 
                 <View
-                  className={`${
+                  className={`px-5 py-1.5 rounded-md ${
                     Number(item.paymentMethod) === 0
-                      ? "bg-red-400"
-                      : "bg-green-400"
-                  } px-8 py-1 rounded-md`}
+                      ? "bg-red-500/20 border border-red-500/40"
+                      : "bg-green-500/20 border border-green-500/40"
+                  }`}
                 >
-                  <Text className="text-lg">
-                    {Number(item.paymentMethod) === 0 ? "Unpaid" : "Paid"}
+                  <Text
+                    className={`text-sm font-semibold tracking-wide ${
+                      Number(item.paymentMethod) === 0
+                        ? "text-red-400"
+                        : "text-green-400"
+                    }`}
+                  >
+                    {Number(item.paymentMethod) === 0 ? "UNPAID" : "PAID"}
                   </Text>
                 </View>
               </View>
