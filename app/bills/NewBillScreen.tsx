@@ -257,14 +257,14 @@ const NewBillScreen = () => {
                   readingCost +
                   Number(prevDue || 0);
 
-                const month = new Date(selected).toLocaleDateString("en-US", {
+                const month = new Date(selected as any).toLocaleDateString("en-US", {
                   month: "long",
                 });
 
                 addBill(Number(id), {
                   id: Date.now(),
                   month: month,
-                  date: new Date(selected).getTime(),
+                  date: new Date(selected as any).getTime(),
                   rent: Number(rent),
                   fix: Number(fix),
                   prevUnit: Number(prevUnit),

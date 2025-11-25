@@ -266,14 +266,17 @@ const EditBillScreen = () => {
                   readingCost +
                   Number(prevDue || 0);
 
-                const month = new Date(selected).toLocaleDateString("en-US", {
-                  month: "long",
-                });
+                const month = new Date(selected as any).toLocaleDateString(
+                  "en-US",
+                  {
+                    month: "long",
+                  }
+                );
 
                 updateBill(userIdNum, billIdNum, {
                   id: Date.now(),
                   month: month,
-                  date: new Date(selected).getTime(),
+                  date: new Date(selected as any).getTime(),
                   rent: Number(rent),
                   fix: Number(fix),
                   prevUnit: Number(prevUnit),
