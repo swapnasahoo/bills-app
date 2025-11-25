@@ -3,7 +3,7 @@ import Feather from "@expo/vector-icons/Feather";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
   Alert,
   FlatList,
@@ -16,6 +16,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const { users, deleteUser } = useContext(UserDataContext);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const query = searchQuery.toLowerCase().trim();
+
+  const filteredUsers = users.filter(
+    (user) =>
+      user.name.toLowerCase().trim().includes(query) ||
+      user.roomNo.toString().includes(query)
+  );
 
   function confirmDeleteUser(id: number) {
     Alert.alert("Delete User", "Are you sure you want to delete this user?", [
@@ -43,16 +52,17 @@ export default function Index() {
             placeholder="Search"
             className="text-white text-xl p-2 placeholder:text-gray-400 w-[80%]
                        border-2 border-blue-500 rounded-md ml-4"
+            onChangeText={setSearchQuery}
           ></TextInput>
         </View>
 
         {/* LIST */}
         <Text className="text-white text-xl font-semibold mt-8">
-          Total: {users.length}
+          Total: {filteredUsers.length}
         </Text>
 
         <FlatList
-          data={users}
+          data={filteredUsers}
           keyExtractor={(user) => user.id.toString()}
           renderItem={({ item }) => (
             <Pressable
