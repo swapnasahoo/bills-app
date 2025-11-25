@@ -113,7 +113,7 @@ const NewUserScreen = () => {
         <div class="row"><span class="label">Name:</span> ${userName}</div>
         <div class="row"><span class="label">Room Number:</span> ${roomNo}</div>
         <div class="row"><span class="label">Date:</span> ${safe(
-          item.date
+          new Date(item.date).toLocaleDateString("en-GB")
         )}</div>
       </div>
 
