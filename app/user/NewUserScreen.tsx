@@ -2,7 +2,7 @@ import { UserDataContext } from "@/context/UserDataContext";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
 import { useContext, useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Alert, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const NewUserScreen = () => {
@@ -43,6 +43,13 @@ const NewUserScreen = () => {
           <Pressable
             className="bg-amber-500 px-10 py-1 rounded-md"
             onPress={() => {
+              if (!name.trim() || !roomNo.trim()) {
+                Alert.alert("Error", "Please fill all the fields.", [
+                  { text: "OK", style: "cancel" },
+                ]);
+                return;
+              }
+              
               addUser(Date.now(), name, Number(roomNo));
               router.push("/");
             }}

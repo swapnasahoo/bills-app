@@ -3,6 +3,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext, useEffect, useState } from "react";
 import {
+  Alert,
   Modal,
   Pressable,
   ScrollView,
@@ -249,6 +250,22 @@ const NewBillScreen = () => {
             <Pressable
               className="bg-amber-500 py-3 rounded-md mt-6"
               onPress={() => {
+                if (
+                  !rent ||
+                  !fix ||
+                  !prevUnit ||
+                  !currUnit ||
+                  !costUnit ||
+                  !paymentMethod
+                ) {
+                  Alert.alert(
+                    "Error",
+                    "Please fill all the fields.\nPrevious Due is optional.",
+                    [{ text: "OK", style: "cancel" }]
+                  );
+                  return;
+                }
+
                 const reading = Number(currUnit) - Number(prevUnit);
                 const readingCost = reading * Number(costUnit);
                 const total =
@@ -257,9 +274,12 @@ const NewBillScreen = () => {
                   readingCost +
                   Number(prevDue || 0);
 
-                const month = new Date(selected as any).toLocaleDateString("en-US", {
-                  month: "long",
-                });
+                const month = new Date(selected as any).toLocaleDateString(
+                  "en-US",
+                  {
+                    month: "long",
+                  }
+                );
 
                 addBill(Number(id), {
                   id: Date.now(),
