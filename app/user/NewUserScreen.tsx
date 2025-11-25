@@ -42,7 +42,18 @@ const NewUserScreen = () => {
                        border border-[#1f2937] bg-[#111827]
                        p-2 rounded-md w-full"
             keyboardType="numeric"
-            onChangeText={setRoomNo}
+            value={roomNo}
+            onChangeText={(text) => {
+              const cleaned = text.replace(/[-,]/g, "");
+
+              if (cleaned.length > 2) {
+                Alert.alert("Error", "Room number should not be 3 digit", [
+                  { text: "OK", style: "cancel" },
+                ]);
+                return;
+              }
+              setRoomNo(cleaned);
+            }}
           />
 
           <Pressable
