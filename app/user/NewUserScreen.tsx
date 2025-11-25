@@ -8,7 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const NewUserScreen = () => {
   const [name, setName] = useState("");
   const [roomNo, setRoomNo] = useState("");
-  const { addUser } = useContext(UserDataContext);
+  const { users, addUser } = useContext(UserDataContext);
 
   return (
     <View className="bg-gray-800 flex-1 p-6">
@@ -49,7 +49,20 @@ const NewUserScreen = () => {
                 ]);
                 return;
               }
-              
+
+              const match = users.find(
+                (user) => user.roomNo === Number(roomNo)
+              );
+
+              if (match) {
+                Alert.alert(
+                  "Error",
+                  `Room number is already alloted to ${match.name}`,
+                  [{ text: "OK", style: "cancel" }]
+                );
+                return;
+              }
+
               addUser(Date.now(), name, Number(roomNo));
               router.push("/");
             }}
