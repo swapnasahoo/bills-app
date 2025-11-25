@@ -49,6 +49,12 @@ const EditBillScreen = () => {
   const [total, setTotal] = useState(foundBill?.total ?? 0);
 
   useEffect(() => {
+    if (foundBill?.date) {
+      setSelected(new Date(foundBill?.date));
+    }
+  }, [foundBill]);
+
+  useEffect(() => {
     const r = Number(currUnit) - Number(prevUnit);
     const rc = r * Number(costUnit);
     const t =
