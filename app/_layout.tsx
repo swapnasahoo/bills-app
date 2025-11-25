@@ -13,7 +13,31 @@ export default function RootLayout() {
           }}
         />
         <Stack.Screen
-          name="NewUserScreen"
+          name="user/NewUserScreen"
+          options={{
+            animation: "slide_from_right",
+          }}
+        />
+        <Stack.Screen
+          name="user/UserEditScreen"
+          options={{
+            animation: "slide_from_right",
+          }}
+        />
+        <Stack.Screen
+          name="bills/UserBillScreen"
+          options={{
+            animation: "slide_from_right",
+          }}
+        />
+        <Stack.Screen
+          name="bills/NewBillScreen"
+          options={{
+            animation: "slide_from_right",
+          }}
+        />
+        <Stack.Screen
+          name="bills/EditBillScreen"
           options={{
             animation: "slide_from_right",
           }}
