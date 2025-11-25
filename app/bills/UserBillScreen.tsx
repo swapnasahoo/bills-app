@@ -45,11 +45,16 @@ const NewUserScreen = () => {
 
     switch (Number(item.paymentMethod)) {
       case 0:
-        finalPaymentMethod = "Unaid";
+        finalPaymentMethod = "None";
+        break;
       case 1:
         finalPaymentMethod = "Cash";
+        break;
       case 2:
         finalPaymentMethod = "Online";
+        break;
+      default:
+        finalPaymentMethod = "N/A";
     }
 
     const html = `
@@ -132,7 +137,7 @@ const NewUserScreen = () => {
           item.reading
         )}</div>
         <div class="row"><span class="label">Cost per Unit:</span> ₹${safe(
-          item.costUnit
+          item.unitCost
         )}</div>
         <div class="row"><span class="label">Reading Cost:</span> ₹${safe(
           item.readingCost
