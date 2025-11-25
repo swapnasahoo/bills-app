@@ -1,13 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useEffect, useState } from "react";
 
-interface User {
+export interface User {
   id: number;
   name: string;
   roomNo: number;
 }
 
-interface BillEntry {
+export interface BillEntry {
   id: number;
   month: string;
   date: number;
