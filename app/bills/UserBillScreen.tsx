@@ -58,109 +58,134 @@ const NewUserScreen = () => {
     }
 
     const html = `
-  <html>
-    <head>
-      <meta charset="UTF-8" />
-      <style>
-        body {
-          padding: 20px;
-          font-family: Arial, sans-serif;
-          color: #333;
-        }
-        h1 {
-          text-align: center;
-          color: #1e40af;
-          margin-bottom: 10px;
-        }
-        h2 {
-          color: #065f46;
-        }
-        h4 {
-          margin: 2px;
-          color: #1e40af;
-        }
-        .section {
-          margin-bottom: 15px;
-        }
-        .row {
-          margin: 6px 0;
-          font-size: 16px;
-        }
-        .label {
-          font-weight: bold;
-        }
-        .total-box {
-          margin-top: 15px;
-          padding: 10px;
-          background: #e0f2fe;
-          border-radius: 6px;
-          border-left: 5px solid #0284c7;
-          font-size: 18px;
-        }
-        hr {
-          margin: 15px 0;
-        }
-      </style>
-    </head>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family: Inter, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+        background: #eef1f6;
+        padding: 40px;
+        display: flex;
+        justify-content: center;
+      }
 
-    <body>
-      <h1>Bill Summary</h1>
+      .card {
+        background: #ffffff;
+        width: 420px;
+        border-radius: 22px;
+        padding: 36px;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+      }
 
-      <h2>${safe(item.month)}</h2>
+      .header {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 6px;
+        letter-spacing: -0.5px;
+      }
+
+      .sub {
+        font-size: 24px;
+        color: #0f84fa;
+        margin-bottom: 28px;
+      }
+
+      .total {
+        font-size: 48px;
+        font-weight: 700;
+        margin: 10px 0 32px;
+        letter-spacing: -1px;
+      }
+
+      .section {
+        margin-bottom: 28px;
+      }
+
+      .label {
+        font-size: 13px;
+        color: #9ca3af;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+        letter-spacing: 0.6px;
+      }
+
+      .value {
+        font-size: 17px;
+        font-weight: 500;
+      }
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #f1f1f3;
+        font-size: 16px;
+      }
+
+      .status {
+        display: inline-block;
+        padding: 6px 14px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 999px;
+        margin-top: 20px;
+        color: #fff;
+        background: ${Number(item.paymentMethod) === 0 ? "#ef4444" : "#10b981"};
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 36px;
+        font-size: 12px;
+        color: #9ca3af;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+
+      <div class="header">${safe(item.month)} Bill</div>
+      <div class="sub">Room ${roomNo} • ${userName}</div>
+
+      <div class="total">₹${safe(item.total)}</div>
 
       <div class="section">
-        <h4>User Info:</h4>
-        <div class="row"><span class="label">Name:</span> ${userName}</div>
-        <div class="row"><span class="label">Room Number:</span> ${roomNo}</div>
-        <div class="row"><span class="label">Date:</span> ${safe(
-          new Date(item.date).toLocaleDateString("en-GB")
+        <div class="label">Invoice Date</div>
+        <div class="value">${new Date(item.date).toLocaleDateString(
+          "en-GB"
         )}</div>
       </div>
 
-      <div class="section">
-        <h4>Bill Info:</h4>
-        <div class="row"><span class="label">Rent:</span> ₹${safe(
-          item.rent,
-          "0"
-        )}</div>
-        <div class="row"><span class="label">Fix:</span> ₹${safe(
-          item.fix,
-          "0"
-        )}</div>
-        <div class="row"><span class="label">Previous Unit:</span> ${safe(
-          item.prevUnit
-        )}</div>
-        <div class="row"><span class="label">Current Unit:</span> ${safe(
-          item.currUnit
-        )}</div>
-        <div class="row"><span class="label">Reading:</span> ${safe(
-          item.reading
-        )}</div>
-        <div class="row"><span class="label">Cost per Unit:</span> ₹${safe(
-          item.unitCost
-        )}</div>
-        <div class="row"><span class="label">Reading Cost:</span> ₹${safe(
-          item.readingCost
-        )}</div>
-        <div class="row"><span class="label">Payment Method:</span> ${safe(
-          finalPaymentMethod
-        )}</div>
-      </div>
+      <div class="label">Details</div>
 
-      <hr />
+      <div class="row"><span>Rent</span><span>₹${safe(item.rent)}</span></div>
+      <div class="row"><span>Fix</span><span>₹${safe(item.fix)}</span></div>
+      <div class="row"><span>Previous Unit</span><span>${safe(
+        item.prevUnit
+      )}</span></div>
+      <div class="row"><span>Current Unit</span><span>${safe(
+        item.currUnit
+      )}</span></div>
+      <div class="row"><span>Reading</span><span>${safe(
+        item.reading
+      )}</span></div>
+      <div class="row"><span>Unit Cost</span><span>₹${safe(
+        item.unitCost
+      )}</span></div>
+      <div class="row"><span>Reading Cost</span><span>₹${safe(
+        item.readingCost
+      )}</span></div>
+      <div class="row"><span>Payment Method</span><span>${finalPaymentMethod}</span></div>
 
-      <div class="total-box">
-        <div class="row"><span class="label">Total:</span> ₹${safe(
-          item.total,
-          "0"
-        )}</div>
-        <div class="row"><span class="label">Status:</span> ${
-          Number(item.paymentMethod) === 0 ? "Unpaid" : "Paid"
-        }</div>
-      </div>
-    </body>
-  </html>
-  `;
+      <span class="status">${
+        Number(item.paymentMethod) === 0 ? "UNPAID" : "PAID"
+      }</span>
+    </div>
+  </body>
+</html>
+`;
 
     // Generate PDF
     const { uri } = await Print.printToFileAsync({ html });
