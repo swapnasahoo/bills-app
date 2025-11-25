@@ -219,7 +219,7 @@ const NewBillScreen = () => {
               items={[
                 { label: "None", value: "0" },
                 { label: "Cash", value: "1" },
-                { label: "Online", value: "1" },
+                { label: "Online", value: "2" },
               ]}
               style={{
                 inputAndroid: { color: "white", backgroundColor: "#374151" },
