@@ -20,7 +20,6 @@ import DateTimePicker, {
 } from "react-native-ui-datepicker";
 
 const EditBillScreen = () => {
-  const [isPrevDue, setIsPrevDue] = useState(false);
   const [selected, setSelected] = useState<DateType>(new Date());
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const defaultStyles = useDefaultStyles();
@@ -47,6 +46,8 @@ const EditBillScreen = () => {
   const [reading, setReading] = useState(foundBill?.reading ?? 0);
   const [readingCost, setReadingCost] = useState(foundBill?.readingCost ?? 0);
   const [total, setTotal] = useState(foundBill?.total ?? 0);
+
+  const [isPrevDue, setIsPrevDue] = useState(prevDue === 0 ? false : true);
 
   useEffect(() => {
     if (foundBill?.date) {
@@ -229,6 +230,7 @@ const EditBillScreen = () => {
                 placeholder="0"
                 placeholderTextColor="#9ca3af"
                 className="text-white text-xl border border-[#1f2937] p-3 rounded-md w-full bg-[#111827]"
+                value={prevDue.toString()}
                 onChangeText={setPrevDue}
                 keyboardType="numeric"
               />
@@ -238,6 +240,7 @@ const EditBillScreen = () => {
             <Text className="text-lg text-white">Payment Method</Text>
 
             <RNPickerSelect
+              value={paymentMethod}
               onValueChange={(value) => setPaymentMethod(value)}
               items={[
                 { label: "None", value: "0" },
