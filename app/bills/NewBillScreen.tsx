@@ -56,6 +56,17 @@ const NewBillScreen = () => {
     setTotal(safeTotal);
   }, [rent, fix, prevUnit, currUnit, costUnit, isPrevDue, prevDue]);
 
+  function clearFields() {
+    setRent("");
+    setFix("");
+    setPrevUnit("");
+    setCurrUnit("");
+    setCostUnit("");
+    setPrevDue("");
+    setIsPrevDue(false);
+    setPaymentMethod("");
+  }
+
   return (
     <View className="bg-gray-800 flex-1 p-6">
       <SafeAreaView className="flex-1">
@@ -67,7 +78,17 @@ const NewBillScreen = () => {
             color="white"
             onPress={() => router.push("/")}
           />
-          <Text className="text-xl text-white font-bold">Add Bill</Text>
+          <View className="flex-row items-center justify-between flex-1">
+            <Text className="text-xl text-white font-bold">Add Bill</Text>
+            <Pressable
+              className="bg-red-600 px-6 py-1 rounded-md"
+              onPress={clearFields}
+            >
+              <Text className="text-xl ml-auto text-white font-bold">
+                Clear
+              </Text>
+            </Pressable>
+          </View>
         </View>
 
         {/* FORM */}
