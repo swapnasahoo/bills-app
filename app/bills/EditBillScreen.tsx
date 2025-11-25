@@ -34,7 +34,6 @@ const EditBillScreen = () => {
   const billsForUser = userBills[userIdNum] ?? [];
   const foundBill = billsForUser.find((bill) => bill.id === billIdNum);
 
-  // INPUTS DATA
   const [rent, setRent] = useState(foundBill?.rent ?? "");
   const [fix, setFix] = useState(foundBill?.fix ?? "");
   const [prevUnit, setPrevUnit] = useState(foundBill?.prevUnit ?? "");
@@ -51,7 +50,7 @@ const EditBillScreen = () => {
 
   useEffect(() => {
     if (foundBill?.date) {
-      setSelected(new Date(foundBill?.date));
+      setSelected(new Date(foundBill.date));
     }
   }, [foundBill]);
 
@@ -61,13 +60,9 @@ const EditBillScreen = () => {
     const t =
       Number(rent) + Number(fix) + rc + (isPrevDue ? Number(prevDue || 0) : 0);
 
-    const safeReading = isNaN(r) ? 0 : r;
-    const safeReadingCost = isNaN(rc) ? 0 : rc;
-    const safeTotal = isNaN(t) ? 0 : t;
-
-    setReading(safeReading);
-    setReadingCost(safeReadingCost);
-    setTotal(safeTotal);
+    setReading(isNaN(r) ? 0 : r);
+    setReadingCost(isNaN(rc) ? 0 : rc);
+    setTotal(isNaN(t) ? 0 : t);
   }, [rent, fix, prevUnit, currUnit, costUnit, isPrevDue, prevDue]);
 
   function clearFields() {
@@ -82,26 +77,27 @@ const EditBillScreen = () => {
   }
 
   if (!foundBill) return null;
+
   return (
-    <View className="bg-gray-800 flex-1 p-6">
+    <View className="bg-[#0d1117] flex-1 p-6">
       <SafeAreaView className="flex-1">
         {/* HEADER */}
         <View className="flex-row items-center gap-4 mb-2">
           <MaterialIcons
             name="arrow-back"
             size={24}
-            color="white"
+            color="#60a5fa"
             onPress={() => router.push("/")}
           />
+
           <View className="flex-row items-center justify-between flex-1">
             <Text className="text-xl text-white font-bold">Edit Bill</Text>
+
             <Pressable
-              className="bg-red-600 px-6 py-1 rounded-md"
+              className="bg-[#f87171] px-6 py-1 rounded-md"
               onPress={clearFields}
             >
-              <Text className="text-xl ml-auto text-white font-bold">
-                Clear
-              </Text>
+              <Text className="text-white font-semibold text-lg">Clear</Text>
             </Pressable>
           </View>
         </View>
@@ -112,13 +108,13 @@ const EditBillScreen = () => {
           showsVerticalScrollIndicator={false}
         >
           <View className="mt-4 w-full gap-4">
-            {/* DATE FIELD — TAP TO OPEN PICKER */}
+            {/* DATE FIELD */}
             <View>
               <Text className="text-lg text-white mb-1">Date</Text>
 
               <Pressable
                 onPress={() => setOpenDatePicker(true)}
-                className="border-2 border-blue-600 p-3 rounded-md bg-gray-700"
+                className="border border-[#1f2937] p-3 rounded-md bg-[#111827]"
               >
                 <Text className="text-white text-xl">
                   {selected
@@ -139,9 +135,11 @@ const EditBillScreen = () => {
                 >
                   <View
                     style={{
-                      backgroundColor: "#1f2937",
+                      backgroundColor: "#111827",
                       borderRadius: 12,
                       padding: 20,
+                      borderWidth: 1,
+                      borderColor: "#1f2937",
                     }}
                   >
                     <DateTimePicker
@@ -154,10 +152,9 @@ const EditBillScreen = () => {
                       }}
                       styles={{
                         ...defaultStyles,
-                        header: { backgroundColor: "#1f2937" },
-
+                        header: { backgroundColor: "#111827" },
                         day: {
-                          backgroundColor: "#1f2937",
+                          backgroundColor: "#111827",
                           width: 38,
                           borderRadius: 6,
                         },
@@ -171,7 +168,7 @@ const EditBillScreen = () => {
                       <Text
                         style={{
                           textAlign: "center",
-                          color: "white",
+                          color: "#60a5fa",
                           fontSize: 16,
                         }}
                       >
@@ -185,38 +182,23 @@ const EditBillScreen = () => {
 
             {/* OTHER FIELDS */}
             {[
-              { label: "Rent", placeholder: "0", change: setRent, value: rent },
-              { label: "Fix", placeholder: "0", change: setFix, value: fix },
-              {
-                label: "Previous Unit",
-                placeholder: "0",
-                change: setPrevUnit,
-                value: prevUnit,
-              },
-              {
-                label: "Current Unit",
-                placeholder: "0",
-                change: setCurrUnit,
-                value: currUnit,
-              },
-              {
-                label: "Cost per Unit",
-                placeholder: "0",
-                change: setCostUnit,
-                value: costUnit,
-              },
+              { label: "Rent", value: rent, change: setRent },
+              { label: "Fix", value: fix, change: setFix },
+              { label: "Previous Unit", value: prevUnit, change: setPrevUnit },
+              { label: "Current Unit", value: currUnit, change: setCurrUnit },
+              { label: "Cost per Unit", value: costUnit, change: setCostUnit },
             ].map((field, i) => (
               <View key={i} className="w-full gap-1">
                 <Text className="text-lg text-white">{field.label}</Text>
+
                 <TextInput
-                  placeholder={field.placeholder}
+                  placeholder="0"
                   placeholderTextColor="#9ca3af"
-                  className="text-white text-xl border-2 border-blue-600 p-3 rounded-md w-full bg-gray-700"
+                  className="text-white text-xl border border-[#1f2937] p-3 rounded-md w-full bg-[#111827]"
                   value={field.value.toString()}
-                  onChangeText={(text) => {
-                    const cleaned = text.replace(/[-.,]/g, "");
-                    field.change(cleaned);
-                  }}
+                  onChangeText={(text) =>
+                    field.change(text.replace(/[-.,]/g, ""))
+                  }
                   keyboardType="numeric"
                 />
               </View>
@@ -224,16 +206,17 @@ const EditBillScreen = () => {
 
             {/* PREVIOUS DUE */}
             <View className="flex-row gap-2 my-1">
-              <Text className="text-lg text-white">Previous Due</Text>
+              <Text className="text-lg text-white mr-auto">Previous Due</Text>
+
               <BouncyCheckbox
                 isChecked={isPrevDue}
                 onPress={() => setIsPrevDue(!isPrevDue)}
-                style={{
-                  marginLeft: "auto",
-                }}
+                fillColor="#60a5fa"
+                unFillColor="#111827"
                 iconStyle={{
                   borderRadius: 4,
                   borderWidth: 2,
+                  borderColor: "#60a5fa",
                 }}
                 innerIconStyle={{
                   borderRadius: 4,
@@ -241,16 +224,19 @@ const EditBillScreen = () => {
               />
             </View>
 
-            <TextInput
-              placeholder="0"
-              placeholderTextColor="#9ca3af"
-              className="text-white text-xl border-2 border-blue-600 p-3 rounded-md w-full bg-gray-700"
-              style={{ display: isPrevDue ? "flex" : "none" }}
-              onChangeText={setPrevDue}
-            />
+            {isPrevDue && (
+              <TextInput
+                placeholder="0"
+                placeholderTextColor="#9ca3af"
+                className="text-white text-xl border border-[#1f2937] p-3 rounded-md w-full bg-[#111827]"
+                onChangeText={setPrevDue}
+                keyboardType="numeric"
+              />
+            )}
 
             {/* PAYMENT METHOD */}
             <Text className="text-lg text-white">Payment Method</Text>
+
             <RNPickerSelect
               onValueChange={(value) => setPaymentMethod(value)}
               items={[
@@ -258,33 +244,63 @@ const EditBillScreen = () => {
                 { label: "Cash", value: "1" },
                 { label: "Online", value: "2" },
               ]}
+              Icon={() => (
+                <MaterialIcons
+                  name="arrow-drop-down"
+                  size={24}
+                  color="#9ca3af"
+                />
+              )}
+              useNativeAndroidPickerStyle={false}
               style={{
-                inputAndroid: { color: "white", backgroundColor: "#374151" },
-                inputIOS: { color: "white", backgroundColor: "#374151" },
-                placeholder: { color: "#9ca3af" },
+                inputAndroid: {
+                  color: "white",
+                  backgroundColor: "#111827",
+                  paddingVertical: 12,
+                  paddingHorizontal: 12,
+                  borderRadius: 6,
+                  borderWidth: 1,
+                  borderColor: "#1f2937",
+                },
+                inputIOS: {
+                  color: "white",
+                  backgroundColor: "#111827",
+                  paddingVertical: 12,
+                  paddingHorizontal: 12,
+                  borderRadius: 6,
+                  borderWidth: 1,
+                  borderColor: "#1f2937",
+                },
+                placeholder: {
+                  color: "#9ca3af",
+                },
+                iconContainer: {
+                  top: 12,
+                  right: 12,
+                },
               }}
             />
 
             {/* SUMMARY */}
-            <View className="bg-gray-700 mt-6 p-4 rounded-lg border border-gray-600">
+            <View className="bg-[#111827] mt-6 p-4 rounded-lg border border-[#1f2937]">
               <Text className="text-white text-xl font-semibold mb-2">
                 Bill Summary
               </Text>
 
               <Text className="text-gray-300">Unit: {reading}</Text>
               <Text className="text-gray-300">Unit Cost: {costUnit}</Text>
-              <Text className="text-gray-300">Unit Cost: {readingCost}</Text>
+              <Text className="text-gray-300">Reading Cost: {readingCost}</Text>
 
-              <View className="h-px bg-gray-500 my-2" />
+              <View className="h-px bg-[#374151] my-2" />
 
-              <Text className="text-amber-300 text-2xl font-bold">
+              <Text className="text-[#fbbf24] text-2xl font-bold">
                 Total: ₹{total}
               </Text>
             </View>
 
             {/* SUBMIT */}
             <Pressable
-              className="bg-amber-500 py-3 rounded-md mt-6"
+              className="bg-[#60a5fa] py-3 rounded-md mt-6"
               onPress={() => {
                 if (
                   !rent ||
@@ -293,11 +309,9 @@ const EditBillScreen = () => {
                   !costUnit ||
                   !paymentMethod
                 ) {
-                  Alert.alert(
-                    "Error",
-                    "Please fill all the fields.\nFix and Previous Due are optional.",
-                    [{ text: "OK", style: "cancel" }]
-                  );
+                  Alert.alert("Error", "Please fill all the required fields.", [
+                    { text: "OK", style: "cancel" },
+                  ]);
                   return;
                 }
 
@@ -311,31 +325,29 @@ const EditBillScreen = () => {
 
                 const month = new Date(selected as any).toLocaleDateString(
                   "en-US",
-                  {
-                    month: "long",
-                  }
+                  { month: "long" }
                 );
 
                 updateBill(userIdNum, billIdNum, {
                   id: Date.now(),
-                  month: month,
+                  month,
                   date: new Date(selected as any).getTime(),
                   rent: Number(rent),
                   fix: Number(fix),
                   prevUnit: Number(prevUnit),
                   currUnit: Number(currUnit),
-                  reading: reading,
+                  reading,
                   unitCost: Number(costUnit),
-                  paymentMethod: paymentMethod,
-                  readingCost: readingCost,
+                  paymentMethod,
+                  readingCost,
                   prevDue: Number(prevDue),
-                  total: total,
+                  total,
                 });
 
                 router.back();
               }}
             >
-              <Text className="text-black text-center text-lg font-semibold">
+              <Text className="text-white text-center text-lg font-semibold">
                 Update Bill
               </Text>
             </Pressable>

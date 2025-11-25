@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const NewUserScreen = () => {
   const { id } = useLocalSearchParams();
-  const { users } = useContext(UserDataContext);
+  const { users, updateUser } = useContext(UserDataContext);
 
   const foundUser = users.find((user) => user.id === Number(id));
 
@@ -15,19 +15,18 @@ const NewUserScreen = () => {
   const [newRoomNo, setNewRoomNo] = useState(
     foundUser?.roomNo.toString() ?? ""
   );
-  const { updateUser } = useContext(UserDataContext);
 
   if (!foundUser) return null;
 
   return (
-    <View className="bg-gray-800 flex-1 p-6">
+    <View className="bg-[#0d1117] flex-1 p-6">
       <SafeAreaView className="flex-1">
         {/* HEADER */}
         <View className="flex-row items-center gap-4">
           <MaterialIcons
             name="arrow-back"
             size={24}
-            color="white"
+            color="#60a5fa"
             onPress={() => router.push("/")}
           />
           <Text className="text-xl text-white font-bold">Edit User</Text>
@@ -37,22 +36,27 @@ const NewUserScreen = () => {
         <View className="mt-8 gap-4 items-center">
           <TextInput
             placeholder="Name"
-            className="text-white text-xl placeholder:text-gray-400 
-            border-2 border-blue-600 p-2 rounded-md w-full"
+            placeholderTextColor="#9ca3af"
+            className="text-white text-xl 
+                       border border-[#1f2937] bg-[#111827]
+                       p-2 rounded-md w-full"
             value={newName}
             onChangeText={setNewName}
-          ></TextInput>
+          />
+
           <TextInput
             placeholder="Room number"
-            className="text-white text-xl placeholder:text-gray-400 
-            border-2 border-blue-600 p-2 rounded-md w-full"
+            placeholderTextColor="#9ca3af"
+            className="text-white text-xl 
+                       border border-[#1f2937] bg-[#111827]
+                       p-2 rounded-md w-full"
             keyboardType="numeric"
             value={newRoomNo}
             onChangeText={setNewRoomNo}
-          ></TextInput>
+          />
 
           <Pressable
-            className="bg-amber-500 px-10 py-1 rounded-md"
+            className="bg-[#60a5fa] px-10 py-2 rounded-md mt-2"
             onPress={() => {
               if (!newName.trim() || !newRoomNo.trim()) {
                 Alert.alert("Error", "Please fill all the fields.", [
@@ -65,7 +69,9 @@ const NewUserScreen = () => {
               router.push("/");
             }}
           >
-            <Text className="text-lg font-semibold">Update</Text>
+            <Text className="text-lg font-semibold text-white tracking-wide">
+              Update
+            </Text>
           </Pressable>
         </View>
       </SafeAreaView>

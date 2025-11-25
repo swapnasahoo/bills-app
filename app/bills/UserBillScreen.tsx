@@ -195,7 +195,7 @@ const NewUserScreen = () => {
   }
 
   return (
-    <View className="bg-gray-800 flex-1 p-6">
+    <View className="bg-[#0d1117] flex-1 p-6">
       <SafeAreaView className="flex-1">
         {/* HEADER */}
         <View className="flex-row items-center gap-4 mb-8">
