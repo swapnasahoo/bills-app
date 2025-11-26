@@ -33,37 +33,45 @@ const NewUserScreen = () => {
         </View>
 
         {/* EDIT USER FORM */}
+        {/* NAME */}
         <View className="mt-8 gap-4 items-center">
-          <TextInput
-            placeholder="Name"
-            placeholderTextColor="#9ca3af"
-            className="text-white text-xl 
+          <View className="w-full gap-1">
+            <Text className="text-lg text-white">Name</Text>
+            <TextInput
+              placeholder="Adreno"
+              placeholderTextColor="#9ca3af"
+              className="text-white text-xl 
                        border border-[#1f2937] bg-[#111827]
                        p-2 rounded-md w-full"
-            value={newName}
-            onChangeText={setNewName}
-          />
+              value={newName}
+              onChangeText={setNewName}
+            />
+          </View>
 
-          <TextInput
-            placeholder="Office number"
-            placeholderTextColor="#9ca3af"
-            className="text-white text-xl 
+          {/* OFFICE NUMBER */}
+          <View className="w-full gap-1">
+            <Text className="text-lg text-white">Office No</Text>
+            <TextInput
+              placeholder="25"
+              placeholderTextColor="#9ca3af"
+              className="text-white text-xl 
                        border border-[#1f2937] bg-[#111827]
                        p-2 rounded-md w-full"
-            keyboardType="numeric"
-            value={newOfficeNo}
-            onChangeText={(text) => {
-              const cleaned = text.replace(/[-,]/g, "");
+              keyboardType="numeric"
+              value={newOfficeNo}
+              onChangeText={(text) => {
+                const cleaned = text.replace(/[-,]/g, "");
 
-              if (cleaned.length > 2) {
-                Alert.alert("Error", "Office number should not be 3 digit", [
-                  { text: "OK", style: "cancel" },
-                ]);
-                return;
-              }
-              setNewOfficeNo(cleaned);
-            }}
-          />
+                if (cleaned.length > 2) {
+                  Alert.alert("Error", "Office number should not be 3 digit", [
+                    { text: "OK", style: "cancel" },
+                  ]);
+                  return;
+                }
+                setNewOfficeNo(cleaned);
+              }}
+            />
+          </View>
 
           <Pressable
             className="bg-[#60a5fa] px-10 py-2 rounded-md mt-2"
