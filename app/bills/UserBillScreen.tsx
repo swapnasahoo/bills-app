@@ -110,11 +110,12 @@ const NewUserScreen = () => {
               <Text className="text-gray-400">
                 Current Unit: {item.currUnit}
               </Text>
-              <Text className="text-gray-400">Reading: {item.reading}</Text>
+              <Text className="text-gray-400">Units Used: {item.reading}</Text>
               <Text className="text-gray-400">Unit Cost: ₹{item.unitCost}</Text>
               <Text className="text-gray-300 font-medium">
-                Reading Cost: ₹{item.readingCost}
+                Energy Charges: ₹{item.readingCost}
               </Text>
+
               <Text
                 style={{
                   color: "#d1d5dc",
