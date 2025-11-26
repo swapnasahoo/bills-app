@@ -52,7 +52,17 @@ const NewUserScreen = () => {
                        p-2 rounded-md w-full"
             keyboardType="numeric"
             value={newRoomNo}
-            onChangeText={setNewRoomNo}
+            onChangeText={(text) => {
+              const cleaned = text.replace(/[-,]/g, "");
+
+              if (cleaned.length > 2) {
+                Alert.alert("Error", "Room number should not be 3 digit", [
+                  { text: "OK", style: "cancel" },
+                ]);
+                return;
+              }
+              setNewRoomNo(cleaned);
+            }}
           />
 
           <Pressable
