@@ -64,7 +64,7 @@ const NewUserScreen = () => {
               onPress={() => router.push("/")}
             />
             <Text className="text-xl text-white font-bold">
-              {foundUser.name} ({foundUser.roomNo})
+              {foundUser.name} ({foundUser.officeNo})
             </Text>
 
             {/* FILTER */}

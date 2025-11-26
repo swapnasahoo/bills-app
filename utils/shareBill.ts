@@ -8,7 +8,7 @@ export async function shareBill(foundUser: User, item: BillEntry) {
     v === undefined || v === null || v === "" ? fallback : v;
 
   const userName = safe(foundUser?.name, "Name not available");
-  const roomNo = safe(foundUser?.roomNo, "Room number not available");
+  const officeNo = safe(foundUser?.officeNo, "Office number not available");
 
   let finalPaymentMethod = "";
 
@@ -132,7 +132,7 @@ export async function shareBill(foundUser: User, item: BillEntry) {
     <div class="card">
 
       <div class="title">${safe(item.month)} Bill</div>
-      <div class="sub">Room ${roomNo} • ${userName}</div>
+      <div class="sub">Office ${officeNo} • ${userName}</div>
 
       <div class="total">₹${safe(item.total)}</div>
 

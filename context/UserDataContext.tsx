@@ -4,7 +4,7 @@ import { createContext, useEffect, useState } from "react";
 export interface User {
   id: number;
   name: string;
-  roomNo: number;
+  officeNo: number;
 }
 
 export interface BillEntry {
@@ -26,9 +26,9 @@ export interface BillEntry {
 interface UserDataContextType {
   users: User[];
   userBills: Partial<Record<number, BillEntry[]>>;
-  addUser: (id: number, name: string, roomNo: number) => void;
+  addUser: (id: number, name: string, officeNo: number) => void;
   deleteUser: (id: number) => void;
-  updateUser: (id: number, name: string, roomNo: number) => void;
+  updateUser: (id: number, name: string, officeNo: number) => void;
   addBill: (id: number, entry: BillEntry) => void;
   deleteBill: (userId: number, billId: number) => void;
   updateBill: (userId: number, billId: number, entry: BillEntry) => void;
@@ -52,8 +52,8 @@ function UserDataContextProvider({ children }: { children: React.ReactNode }) {
   >({});
   const [loaded, setLoaded] = useState(false);
 
-  function addUser(id: number, name: string, roomNo: number) {
-    setUsers((prev) => [...prev, { id: id, name: name, roomNo: roomNo }]);
+  function addUser(id: number, name: string, officeNo: number) {
+    setUsers((prev) => [...prev, { id: id, name: name, officeNo: officeNo }]);
   }
 
   function deleteUser(id: number) {
@@ -66,10 +66,10 @@ function UserDataContextProvider({ children }: { children: React.ReactNode }) {
     });
   }
 
-  function updateUser(id: number, name: string, roomNo: number) {
+  function updateUser(id: number, name: string, officeNo: number) {
     setUsers(
       users.map((user) =>
-        user.id === id ? { ...user, name: name, roomNo: roomNo } : user
+        user.id === id ? { ...user, name: name, officeNo: officeNo } : user
       )
     );
   }

@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const NewUserScreen = () => {
   const [name, setName] = useState("");
-  const [roomNo, setRoomNo] = useState("");
+  const [officeNo, setOfficeNo] = useState("");
   const { users, addUser } = useContext(UserDataContext);
 
   return (
@@ -36,30 +36,30 @@ const NewUserScreen = () => {
           />
 
           <TextInput
-            placeholder="Room number"
+            placeholder="Office number"
             placeholderTextColor="#9ca3af"
             className="text-white text-xl 
                        border border-[#1f2937] bg-[#111827]
                        p-2 rounded-md w-full"
             keyboardType="numeric"
-            value={roomNo}
+            value={officeNo}
             onChangeText={(text) => {
               const cleaned = text.replace(/[-,]/g, "");
 
               if (cleaned.length > 2) {
-                Alert.alert("Error", "Room number should not be 3 digit", [
+                Alert.alert("Error", "Office number should not be 3 digit", [
                   { text: "OK", style: "cancel" },
                 ]);
                 return;
               }
-              setRoomNo(cleaned);
+              setOfficeNo(cleaned);
             }}
           />
 
           <Pressable
             className="bg-[#60a5fa] px-10 py-2 rounded-md mt-2"
             onPress={() => {
-              if (!name.trim() || !roomNo.trim()) {
+              if (!name.trim() || !officeNo.trim()) {
                 Alert.alert("Error", "Please fill all the fields.", [
                   { text: "OK", style: "cancel" },
                 ]);
@@ -67,19 +67,19 @@ const NewUserScreen = () => {
               }
 
               const match = users.find(
-                (user) => user.roomNo === Number(roomNo)
+                (user) => user.officeNo === Number(officeNo)
               );
 
               if (match) {
                 Alert.alert(
                   "Error",
-                  `Room number is already alloted to ${match.name}`,
+                  `Office number is already alloted to ${match.name}`,
                   [{ text: "OK", style: "cancel" }]
                 );
                 return;
               }
 
-              addUser(Date.now(), name, Number(roomNo));
+              addUser(Date.now(), name, Number(officeNo));
               router.push("/");
             }}
           >

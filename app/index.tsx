@@ -28,15 +28,15 @@ export default function Index() {
   let filteredUsers = users.filter(
     (user) =>
       user.name.toLowerCase().trim().includes(query) ||
-      user.roomNo.toString().includes(query)
+      user.officeNo.toString().includes(query)
   );
 
   if (sortMode === "asc") {
-    filteredUsers = [...filteredUsers].sort((a, b) => a.roomNo - b.roomNo);
+    filteredUsers = [...filteredUsers].sort((a, b) => a.officeNo - b.officeNo);
   }
 
   if (sortMode === "desc") {
-    filteredUsers = [...filteredUsers].sort((a, b) => b.roomNo - a.roomNo);
+    filteredUsers = [...filteredUsers].sort((a, b) => b.officeNo - a.officeNo);
   }
 
   function confirmDeleteUser(id: number, name: string) {
@@ -113,10 +113,10 @@ export default function Index() {
                   })
                 }
               >
-                {/* ROOM BOX */}
+                {/* OFFICE BOX */}
                 <View className="bg-[#1f2937] p-4 w-15 h-15 rounded-md justify-center items-center">
                   <Text className="text-white text-lg font-semibold">
-                    {item.roomNo}
+                    {item.officeNo}
                   </Text>
                 </View>
 

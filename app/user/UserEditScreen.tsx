@@ -12,8 +12,8 @@ const NewUserScreen = () => {
   const foundUser = users.find((user) => user.id === Number(id));
 
   const [newName, setNewName] = useState(foundUser?.name ?? "");
-  const [newRoomNo, setNewRoomNo] = useState(
-    foundUser?.roomNo.toString() ?? ""
+  const [newOfficeNo, setNewOfficeNo] = useState(
+    foundUser?.officeNo.toString() ?? ""
   );
 
   if (!foundUser) return null;
@@ -45,37 +45,37 @@ const NewUserScreen = () => {
           />
 
           <TextInput
-            placeholder="Room number"
+            placeholder="Office number"
             placeholderTextColor="#9ca3af"
             className="text-white text-xl 
                        border border-[#1f2937] bg-[#111827]
                        p-2 rounded-md w-full"
             keyboardType="numeric"
-            value={newRoomNo}
+            value={newOfficeNo}
             onChangeText={(text) => {
               const cleaned = text.replace(/[-,]/g, "");
 
               if (cleaned.length > 2) {
-                Alert.alert("Error", "Room number should not be 3 digit", [
+                Alert.alert("Error", "Office number should not be 3 digit", [
                   { text: "OK", style: "cancel" },
                 ]);
                 return;
               }
-              setNewRoomNo(cleaned);
+              setNewOfficeNo(cleaned);
             }}
           />
 
           <Pressable
             className="bg-[#60a5fa] px-10 py-2 rounded-md mt-2"
             onPress={() => {
-              if (!newName.trim() || !newRoomNo.trim()) {
+              if (!newName.trim() || !newOfficeNo.trim()) {
                 Alert.alert("Error", "Please fill all the fields.", [
                   { text: "OK", style: "cancel" },
                 ]);
                 return;
               }
 
-              updateUser(Number(id), newName, Number(newRoomNo));
+              updateUser(Number(id), newName, Number(newOfficeNo));
               router.push("/");
             }}
           >
