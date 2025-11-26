@@ -45,13 +45,17 @@ export async function shareBill(foundUser: User, item: BillEntry) {
         border-radius: 22px;
         padding: 36px;
         box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+        border-top: 2px solid #e5e7eb;
+        border-bottom: 2px solid #e5e7eb;
       }
 
-      .header {
+
+      .title {
         font-size: 32px;
         font-weight: 700;
         margin-bottom: 6px;
         letter-spacing: -0.5px;
+        color: #111827;
       }
 
       .sub {
@@ -65,23 +69,15 @@ export async function shareBill(foundUser: User, item: BillEntry) {
         font-weight: 700;
         margin: 10px 0 32px;
         letter-spacing: -1px;
+        color: #111827;
       }
 
-      .section {
-        margin-bottom: 28px;
-      }
-
-      .label {
+      .section-label {
         font-size: 13px;
         color: #9ca3af;
         text-transform: uppercase;
         margin-bottom: 6px;
         letter-spacing: 0.6px;
-      }
-
-      .value {
-        font-size: 17px;
-        font-weight: 500;
       }
 
       .row {
@@ -92,28 +88,42 @@ export async function shareBill(foundUser: User, item: BillEntry) {
         font-size: 16px;
       }
 
-      /* ✅ ONLY highlight styling added */
-      .highlight span:last-child {
-        font-weight: 600;
-        color: #374151; /* text-gray-700 */
+      .row:last-of-type {
+        border-bottom: none;
       }
+
+      .label {
+        font-size: 16px;
+        color: #9ca3af;
+        font-weight: 400;
+      }
+
+      .label.strong {
+        font-size: 16px;
+        font-weight: 600;
+        color: #111827;
+      }
+
+      .value {
+        font-size: 17px;
+        font-weight: 400;
+        color: #111827;
+      }
+
+      .value.strong {
+        font-weight: 600;
+      }
+
 
       .status {
         display: inline-block;
-        padding: 6px 14px;
-        font-size: 14px;
-        font-weight: 600;
+        margin-top: 24px;
+        padding: 10px 20px;
+        font-size: 18px;
+        font-weight: 700;
         border-radius: 999px;
-        margin-top: 20px;
-        color: #fff;
+        color: #ffffff;
         background: ${Number(item.paymentMethod) === 0 ? "#ef4444" : "#10b981"};
-      }
-
-      .footer {
-        text-align: center;
-        margin-top: 36px;
-        font-size: 12px;
-        color: #9ca3af;
       }
     </style>
   </head>
@@ -121,46 +131,68 @@ export async function shareBill(foundUser: User, item: BillEntry) {
   <body>
     <div class="card">
 
-      <div class="header">${safe(item.month)} Bill</div>
+      <div class="title">${safe(item.month)} Bill</div>
       <div class="sub">Room ${roomNo} • ${userName}</div>
 
       <div class="total">₹${safe(item.total)}</div>
 
-      <div class="section">
-        <div class="label">Invoice Date</div>
-        <div class="value">${new Date(item.date).toLocaleDateString(
+      <div class="section-label">DETAILS</div>
+
+      <div class="row">
+        <span class="label">Invoice Date</span>
+        <span class="value">${new Date(item.date).toLocaleDateString(
           "en-GB"
-        )}</div>
+        )}</span>
       </div>
 
-      <div class="label">Details</div>
+      <div class="row">
+        <span class="label strong">Rent</span>
+        <span class="value strong">₹${safe(item.rent)}</span>
+      </div>
 
-      <!-- ✅ Only these three rows now highlighted -->
-      <div class="row highlight"><span>Rent</span><span>₹${safe(
-        item.rent
-      )}</span></div>
-      <div class="row highlight"><span>Fix</span><span>₹${safe(
-        item.fix
-      )}</span></div>
+      <div class="row">
+        <span class="label strong">Fix</span>
+        <span class="value strong">₹${safe(item.fix)}</span>
+      </div>
 
-      <div class="row"><span>Previous Unit</span><span>${safe(
-        item.prevUnit
-      )}</span></div>
-      <div class="row"><span>Current Unit</span><span>${safe(
-        item.currUnit
-      )}</span></div>
-      <div class="row"><span>Reading</span><span>${safe(
-        item.reading
-      )}</span></div>
-      <div class="row"><span>Unit Cost</span><span>₹${safe(
-        item.unitCost
-      )}</span></div>
+      <div class="row">
+        <span class="label">Previous Unit</span>
+        <span class="value">${safe(item.prevUnit)}</span>
+      </div>
 
-      <div class="row highlight"><span>Reading Cost</span><span>₹${safe(
-        item.readingCost
-      )}</span></div>
+      <div class="row">
+        <span class="label">Current Unit</span>
+        <span class="value">${safe(item.currUnit)}</span>
+      </div>
 
-      <div class="row"><span>Payment Method</span><span>${finalPaymentMethod}</span></div>
+      <div class="row">
+        <span class="label">Units Used</span>
+        <span class="value">${safe(item.reading)}</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Unit Cost</span>
+        <span class="value">₹${safe(item.unitCost)}</span>
+      </div>
+
+      <div class="row">
+        <span class="label strong">Energy Charges</span>
+        <span class="value strong">₹${safe(item.readingCost)}</span>
+      </div>
+
+      ${
+        item.prevDue
+          ? `<div class="row">
+              <span class="label strong">Previous Due</span>
+              <span class="value strong">₹${safe(item.prevDue)}</span>
+            </div>`
+          : ""
+      }
+
+      <div class="row">
+        <span class="label">Payment Method</span>
+        <span class="value">${finalPaymentMethod}</span>
+      </div>
 
       <span class="status">${
         Number(item.paymentMethod) === 0 ? "UNPAID" : "PAID"
