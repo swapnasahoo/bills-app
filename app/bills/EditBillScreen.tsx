@@ -187,7 +187,7 @@ const EditBillScreen = () => {
               { label: "Fix", value: fix, change: setFix },
               { label: "Previous Unit", value: prevUnit, change: setPrevUnit },
               { label: "Current Unit", value: currUnit, change: setCurrUnit },
-              { label: "Cost per Unit", value: costUnit, change: setCostUnit },
+              { label: "Rate per Unit", value: costUnit, change: setCostUnit },
             ].map((field, i) => (
               <View key={i} className="w-full gap-1">
                 <Text className="text-lg text-white">{field.label}</Text>
@@ -287,12 +287,14 @@ const EditBillScreen = () => {
             {/* SUMMARY */}
             <View className="bg-[#111827] mt-6 p-4 rounded-lg border border-[#1f2937]">
               <Text className="text-white text-xl font-semibold mb-2">
-                Bill Summary
+                Bill Overview
               </Text>
 
-              <Text className="text-gray-300">Unit: {reading}</Text>
-              <Text className="text-gray-300">Unit Cost: {costUnit}</Text>
-              <Text className="text-gray-300">Reading Cost: {readingCost}</Text>
+              <Text className="text-gray-300">Units Used: {reading}</Text>
+              <Text className="text-gray-300">Rate per Unit: {costUnit}</Text>
+              <Text className="text-gray-300">
+                Energy Charges: {readingCost}
+              </Text>
 
               <View className="h-px bg-[#374151] my-2" />
 

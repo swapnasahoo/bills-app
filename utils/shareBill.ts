@@ -171,7 +171,7 @@ export async function shareBill(foundUser: User, item: BillEntry) {
       </div>
 
       <div class="row">
-        <span class="label">Unit Cost</span>
+        <span class="label">Rate per Unit</span>
         <span class="value">₹${safe(item.unitCost)}</span>
       </div>
 

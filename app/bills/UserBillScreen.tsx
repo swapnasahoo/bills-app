@@ -151,7 +151,7 @@ const NewUserScreen = () => {
                   Units Used: {item.reading}
                 </Text>
                 <Text className="text-gray-400">
-                  Unit Cost: ₹{item.unitCost}
+                  Rate per Unit: ₹{item.unitCost}
                 </Text>
                 <Text className="text-gray-300 font-medium">
                   Energy Charges: ₹{item.readingCost}
