@@ -109,7 +109,7 @@ const NewBillScreen = () => {
               </Pressable>
 
               {/* MODAL DATE PICKER */}
-              <Modal visible={openDatePicker} transparent animationType="fade">
+              <Modal visible={openDatePicker} transparent animationType="slide">
                 <View
                   style={{
                     flex: 1,
@@ -131,6 +131,7 @@ const NewBillScreen = () => {
                       mode="single"
                       date={selected}
                       maxDate={new Date()}
+                      weekdaysFormat="short"
                       onChange={({ date }) => {
                         setSelected(date);
                         setOpenDatePicker(false);

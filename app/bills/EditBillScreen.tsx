@@ -112,7 +112,7 @@ const EditBillScreen = () => {
             {/* DATE FIELD */}
             <View>
               <Text className="text-lg text-white mb-1">Date</Text>
-
+    
               <Pressable
                 onPress={() => setOpenDatePicker(true)}
                 className="border border-[#1f2937] p-3 rounded-md bg-[#111827]"
@@ -125,7 +125,7 @@ const EditBillScreen = () => {
               </Pressable>
 
               {/* MODAL DATE PICKER */}
-              <Modal visible={openDatePicker} transparent animationType="fade">
+              <Modal visible={openDatePicker} transparent animationType="slide">
                 <View
                   style={{
                     flex: 1,
@@ -147,6 +147,7 @@ const EditBillScreen = () => {
                       mode="single"
                       date={selected}
                       maxDate={new Date()}
+                      weekdaysFormat="short"
                       onChange={({ date }) => {
                         setSelected(date);
                         setOpenDatePicker(false);
