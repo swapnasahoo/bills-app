@@ -1,9 +1,9 @@
 import * as Print from "expo-print";
-import * as Sharing from "expo-sharing"
+import * as Sharing from "expo-sharing";
 
-import { User, BillEntry } from "@/context/UserDataContext";
+import { BillEntry, User } from "@/context/UserDataContext";
 
-export async function shareBill(foundUser: User, item: BillEntry, ) {
+export async function shareBill(foundUser: User, item: BillEntry) {
   const safe = (v: any, fallback = "N/A") =>
     v === undefined || v === null || v === "" ? fallback : v;
 
@@ -92,6 +92,12 @@ export async function shareBill(foundUser: User, item: BillEntry, ) {
         font-size: 16px;
       }
 
+      /* ✅ ONLY highlight styling added */
+      .highlight span:last-child {
+        font-weight: 600;
+        color: #374151; /* text-gray-700 */
+      }
+
       .status {
         display: inline-block;
         padding: 6px 14px;
@@ -129,8 +135,14 @@ export async function shareBill(foundUser: User, item: BillEntry, ) {
 
       <div class="label">Details</div>
 
-      <div class="row"><span>Rent</span><span>₹${safe(item.rent)}</span></div>
-      <div class="row"><span>Fix</span><span>₹${safe(item.fix)}</span></div>
+      <!-- ✅ Only these three rows now highlighted -->
+      <div class="row highlight"><span>Rent</span><span>₹${safe(
+        item.rent
+      )}</span></div>
+      <div class="row highlight"><span>Fix</span><span>₹${safe(
+        item.fix
+      )}</span></div>
+
       <div class="row"><span>Previous Unit</span><span>${safe(
         item.prevUnit
       )}</span></div>
@@ -143,14 +155,17 @@ export async function shareBill(foundUser: User, item: BillEntry, ) {
       <div class="row"><span>Unit Cost</span><span>₹${safe(
         item.unitCost
       )}</span></div>
-      <div class="row"><span>Reading Cost</span><span>₹${safe(
+
+      <div class="row highlight"><span>Reading Cost</span><span>₹${safe(
         item.readingCost
       )}</span></div>
+
       <div class="row"><span>Payment Method</span><span>${finalPaymentMethod}</span></div>
 
       <span class="status">${
         Number(item.paymentMethod) === 0 ? "UNPAID" : "PAID"
       }</span>
+
     </div>
   </body>
 </html>
