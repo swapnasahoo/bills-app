@@ -198,7 +198,7 @@ export default function Index() {
                 }}
               />
               <Text className="text-white text-lg">
-                Sort by ascending order
+                Room Number (Low → High)
               </Text>
             </View>
 
@@ -219,7 +219,7 @@ export default function Index() {
                 }}
               />
               <Text className="text-white text-lg">
-                Sort by descending order
+                Room Number (High → Low)
               </Text>
             </View>
           </View>
