@@ -25,7 +25,7 @@ export interface BillEntry {
 
 interface UserDataContextType {
   users: User[];
-  userBills: { [key: number]: BillEntry[] };
+  userBills: Partial<Record<number, BillEntry[]>>;
   addUser: (id: number, name: string, roomNo: number) => void;
   deleteUser: (id: number) => void;
   updateUser: (id: number, name: string, roomNo: number) => void;
@@ -47,9 +47,9 @@ export const UserDataContext = createContext<UserDataContextType>({
 
 function UserDataContextProvider({ children }: { children: React.ReactNode }) {
   const [users, setUsers] = useState<User[]>([]);
-  const [userBills, setUserBills] = useState<{ [key: number]: BillEntry[] }>(
-    {}
-  );
+  const [userBills, setUserBills] = useState<
+    Partial<Record<number, BillEntry[]>>
+  >({});
   const [loaded, setLoaded] = useState(false);
 
   function addUser(id: number, name: string, roomNo: number) {
@@ -58,6 +58,12 @@ function UserDataContextProvider({ children }: { children: React.ReactNode }) {
 
   function deleteUser(id: number) {
     setUsers(users.filter((user) => user.id !== id));
+
+    setUserBills((prev) => {
+      const updated = { ...prev };
+      delete updated[id];
+      return updated;
+    });
   }
 
   function updateUser(id: number, name: string, roomNo: number) {
@@ -94,7 +100,6 @@ function UserDataContextProvider({ children }: { children: React.ReactNode }) {
       ),
     }));
   }
-
 
   // LOAD DATA
   useEffect(() => {

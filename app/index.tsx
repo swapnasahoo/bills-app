@@ -26,18 +26,22 @@ export default function Index() {
       user.roomNo.toString().includes(query)
   );
 
-  function confirmDeleteUser(id: number) {
-    Alert.alert("Delete User", "Are you sure you want to delete this user?", [
-      {
-        text: "Cancel",
-        style: "cancel",
-      },
-      {
-        text: "Delete",
-        style: "destructive",
-        onPress: () => deleteUser(id),
-      },
-    ]);
+  function confirmDeleteUser(id: number, name: string) {
+    Alert.alert(
+      "Delete User",
+      `Are you sure you want to delete this user?\nThis will clear all the data of ${name}`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => deleteUser(id),
+        },
+      ]
+    );
   }
 
   return (
@@ -110,7 +114,7 @@ export default function Index() {
                 name="trash-2"
                 size={20}
                 color="#f87171" // matching actionDelete
-                onPress={() => confirmDeleteUser(item.id)}
+                onPress={() => confirmDeleteUser(item.id, item.name)}
               />
             </Pressable>
           )}
