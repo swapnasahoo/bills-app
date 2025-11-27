@@ -1,4 +1,5 @@
 import { UserDataContext } from "@/context/UserDataContext";
+import { showToast } from "@/utils/toast";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext, useState } from "react";
@@ -84,6 +85,13 @@ const NewUserScreen = () => {
               }
 
               updateUser(Number(id), newName, Number(newOfficeNo));
+
+              showToast({
+                type: "success",
+                text1: "Succesfull",
+                text2: "User has been successfully updated",
+              });
+
               router.push("/");
             }}
           >

@@ -1,4 +1,5 @@
 import { UserDataContext } from "@/context/UserDataContext";
+import { showToast } from "@/utils/toast";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
@@ -51,7 +52,15 @@ export default function Index() {
         {
           text: "Delete",
           style: "destructive",
-          onPress: () => deleteUser(id),
+          onPress: () => {
+            deleteUser(id);
+
+            showToast({
+              type: "success",
+              text1: "Succesfull",
+              text2: "User has been successfully deleted",
+            });
+          },
         },
       ]
     );

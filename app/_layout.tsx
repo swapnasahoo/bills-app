@@ -1,6 +1,7 @@
 import UserDataContextProvider from "@/context/UserDataContext";
 import { Stack } from "expo-router";
 import "../global.css";
+import Toast from 'react-native-toast-message';
 
 export default function RootLayout() {
   return (
@@ -43,6 +44,7 @@ export default function RootLayout() {
           }}
         />
       </Stack>
+    <Toast />
     </UserDataContextProvider>
   );
 }

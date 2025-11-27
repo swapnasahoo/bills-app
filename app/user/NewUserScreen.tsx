@@ -1,4 +1,5 @@
 import { UserDataContext } from "@/context/UserDataContext";
+import { showToast } from "@/utils/toast";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
 import { useContext, useState } from "react";
@@ -88,6 +89,13 @@ const NewUserScreen = () => {
               }
 
               addUser(Date.now(), name, Number(officeNo));
+
+              showToast({
+                type: "success",
+                text1: "Succesfull",
+                text2: "User has been successfully added",
+              });
+
               router.push("/");
             }}
           >

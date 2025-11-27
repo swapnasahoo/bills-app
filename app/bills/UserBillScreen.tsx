@@ -1,5 +1,6 @@
 import { UserDataContext } from "@/context/UserDataContext";
 import { shareBill } from "@/utils/shareBill";
+import { showToast } from "@/utils/toast";
 import Entypo from "@expo/vector-icons/Entypo";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -46,6 +47,12 @@ const NewUserScreen = () => {
         style: "destructive",
         onPress: () => {
           deleteBill(userId, billId);
+
+          showToast({
+            type: "success",
+            text1: "Succesfull",
+            text2: "Bill has been successfully deleted",
+          });
         },
       },
     ]);
