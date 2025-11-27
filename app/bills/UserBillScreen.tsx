@@ -22,6 +22,10 @@ const NewUserScreen = () => {
 
   let filteredUserBills = userBills[Number(id)] ?? [];
 
+  filteredUserBills.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+
   if (filterMode === "paid") {
     filteredUserBills = [
       ...filteredUserBills.filter((bill) => bill.paymentMethod !== "0"),
