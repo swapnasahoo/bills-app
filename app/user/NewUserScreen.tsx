@@ -31,8 +31,6 @@ const NewUserScreen = () => {
           <View className="w-full gap-1">
             <Text className="text-lg text-white">Name</Text>
             <TextInput
-              placeholder="Adreno"
-              placeholderTextColor="#9ca3af"
               className="text-white text-xl 
                        border border-[#1f2937] bg-[#111827]
                        p-2 rounded-md w-full"
@@ -44,8 +42,6 @@ const NewUserScreen = () => {
           <View className="w-full gap-1">
             <Text className="text-lg text-white">Office No</Text>
             <TextInput
-              placeholder="25"
-              placeholderTextColor="#9ca3af"
               className="text-white text-xl 
                        border border-[#1f2937] bg-[#111827]
                        p-2 rounded-md w-full"
