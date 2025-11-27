@@ -18,6 +18,8 @@ import DateTimePicker, {
   DateType,
   useDefaultStyles,
 } from "react-native-ui-datepicker";
+import {func} from "ts-interface-checker";
+import {showToast} from "@/utils/toast";
 
 const NewBillScreen = () => {
   const [isPrevDue, setIsPrevDue] = useState(false);
@@ -52,16 +54,35 @@ const NewBillScreen = () => {
     setTotal(isNaN(t) ? 0 : t);
   }, [rent, fix, prevUnit, currUnit, costUnit, isPrevDue, prevDue]);
 
-  function clearFields() {
-    setRent("");
-    setFix("");
-    setPrevUnit("");
-    setCurrUnit("");
-    setCostUnit("");
-    setPrevDue("");
-    setIsPrevDue(false);
-    setPaymentMethod("");
-  }
+    function confirmClearField() {
+        Alert.alert('Clear fields', 'Are you sure you want to clear all the fields?', [
+            {
+                text: "Cancel",
+                style: "cancel",
+                onPress: () => {}
+            },
+            {
+                text: "Confirm",
+                style: 'destructive',
+                onPress: () => {
+                    setRent("");
+                    setFix("");
+                    setPrevUnit("");
+                    setCurrUnit("");
+                    setCostUnit("");
+                    setPrevDue("");
+                    setIsPrevDue(false);
+                    setPaymentMethod("");
+
+                    showToast({
+                        type: "success",
+                        text1: 'Successfull',
+                        text2: 'All fields has been cleared successfully',
+                    })
+                }
+            }
+        ])
+    }
 
   return (
     <View className="bg-[#0d1117] flex-1 p-6">
@@ -80,7 +101,7 @@ const NewBillScreen = () => {
 
             <Pressable
               className="bg-[#f87171] px-6 py-1 rounded-md"
-              onPress={clearFields}
+              onPress={confirmClearField}
             >
               <Text className="text-white font-semibold text-lg">Clear</Text>
             </Pressable>
