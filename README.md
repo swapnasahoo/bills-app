@@ -1,50 +1,68 @@
-# Welcome to your Expo app 👋
+# Bills App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A small Expo + React Native app for creating, editing, and sharing simple bills between users.
 
-## Get started
+## Features
 
-1. Install dependencies
+- Create, edit, and view bills
+- Add and manage users
+- Share bills via system share sheet
+- Uses Expo Router with a lightweight context for user data
 
-   ```bash
-   npm install
-   ```
+## Requirements
 
-2. Start the app
+- Node.js (recommended >= 18)
+- npm
+- Expo CLI (optional but useful): `npm install -g expo-cli`
 
-   ```bash
-   npx expo start
-   ```
+## Install
 
-In the output, you'll find options to open the app in a
+Clone the repo and install dependencies:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```powershell
+git clone https://github.com/swapnasahoo/bills-app.git
+cd bills-app
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Run (development)
 
-## Learn more
+This project uses Expo. Common scripts from `package.json`:
 
-To learn more about developing your project with Expo, look at the following resources:
+- `npm run start` — start Expo dev tools
+- `npm run android` — open on Android emulator/device
+- `npm run ios` — open on iOS simulator/device
+- `npm run web` — run in a browser
+- `npm run lint` — run ESLint
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Run the app:
 
-## Join the community
+```powershell
+npm run start
+```
 
-Join our community of developers creating universal apps.
+Then open it in the Expo Go app or a simulator.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Project Structure (important files)
+
+- `app/` — main app routes and screens
+  - `app/_layout.tsx` — root layout and navigation
+  - `app/index.tsx` — app entry route
+  - `app/bills/` — screens for bill creation, editing, viewing
+  - `app/user/` — user creation and editing
+- `context/UserDataContext.tsx` — app context for user/bill data
+- `utils/shareBill.ts` — helper to share bill content
+- `package.json` — scripts & dependencies
+
+## Notes
+
+- This project leverages `expo-router` and `nativewind` for styling.
+- If you see Metro bundler caching issues, try restarting with `expo start -c`.
+
+## Contributing
+
+PRs and issues are welcome. For small changes, open a branch and submit a pull request.
+
+## License
+
+This project is licensed under the MIT License — see `LICENSE` for details.
